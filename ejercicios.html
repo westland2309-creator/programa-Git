@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <!-- ═══════════════════════════════════════════════════════
+         1. CONFIGURACIÓN DEL DOCUMENTO
+    ═══════════════════════════════════════════════════════ -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Ejercicios - DEXONEFIT</title>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         2. ESTILOS CSS
+    ═══════════════════════════════════════════════════════ -->
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        header button:hover {
+            background: #e65100;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .ejercicio {
+            border-left: 5px solid #ff6d00;
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .ejercicio h3 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        .obligatorio {
+            color: #d32f2f;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         3. ENCABEZADO
+    ═══════════════════════════════════════════════════════ -->
+
+    <header>
+
+        <h1>DEXONEFIT</h1>
+
+        <p>Biblioteca de ejercicios</p>
+
+        <button onclick="window.location.href='menu.html'">
+
+            ← VOLVER AL MENÚ
+
+        </button>
+
+    </header>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         4. CONTENEDOR PRINCIPAL
+    ═══════════════════════════════════════════════════════ -->
+
+    <div class="contenedor">
+
+
+        <!-- ═══════════════════════════════════════════════════
+             5. REGISTRAR EJERCICIO
+        ═══════════════════════════════════════════════════ -->
+
+        <div class="tarjeta">
+
+            <h2>🏃 Registrar ejercicio</h2>
+
+
+            <label>
+
+                Nombre del ejercicio
+
+                <span class="obligatorio">*</span>
+
+            </label>
+
+            <input
+                type="text"
+                id="nombre"
+                placeholder="Ej: Sentadilla con barra"
+            >
+
+
+            <label>
+
+                Grupo muscular
+
+                <span class="obligatorio">*</span>
+
+            </label>
+
+            <select id="grupo">
+
+                <option value="">
+                    Seleccionar grupo muscular
+                </option>
+
+                <option value="Pecho">
+                    Pecho
+                </option>
+
+                <option value="Espalda">
+                    Espalda
+                </option>
+
+                <option value="Hombros">
+                    Hombros
+                </option>
+
+                <option value="Bíceps">
+                    Bíceps
+                </option>
+
+                <option value="Tríceps">
+                    Tríceps
+                </option>
+
+                <option value="Cuádriceps">
+                    Cuádriceps
+                </option>
+
+                <option value="Isquiotibiales">
+                    Isquiotibiales
+                </option>
+
+                <option value="Glúteos">
+                    Glúteos
+                </option>
+
+                <option value="Pantorrillas">
+                    Pantorrillas
+                </option>
+
+                <option value="Core">
+                    Core
+                </option>
+
+                <option value="Cuerpo completo">
+                    Cuerpo completo
+                </option>
+
+            </select>
+
+
+            <label>
+                Patrón de movimiento
+            </label>
+
+            <select id="patron">
+
+                <option value="">
+                    Seleccionar patrón
+                </option>
+
+                <option value="Empuje horizontal">
+                    Empuje horizontal
+                </option>
+
+                <option value="Empuje vertical">
+                    Empuje vertical
+                </option>
+
+                <option value="Tracción horizontal">
+                    Tracción horizontal
+                </option>
+
+                <option value="Tracción vertical">
+                    Tracción vertical
+                </option>
+
+                <option value="Sentadilla">
+                    Sentadilla
+                </option>
+
+                <option value="Bisagra de cadera">
+                    Bisagra de cadera
+                </option>
+
+                <option value="Dominante de rodilla">
+                    Dominante de rodilla
+                </option>
+
+                <option value="Dominante de cadera">
+                    Dominante de cadera
+                </option>
+
+                <option value="Locomoción">
+                    Locomoción
+                </option>
+
+                <option value="Core">
+                    Core
+                </option>
+
+                <option value="Otro">
+                    Otro
+                </option>
+
+            </select>
+
+
+            <label>
+                Tipo de ejercicio
+            </label>
+
+            <select id="tipo">
+
+                <option value="">
+                    Seleccionar tipo
+                </option>
+
+                <option value="Fuerza">
+                    Fuerza
+                </option>
+
+                <option value="Hipertrofia">
+                    Hipertrofia
+                </option>
+
+                <option value="Potencia">
+                    Potencia
+                </option>
+
+                <option value="Movilidad">
+                    Movilidad
+                </option>
+
+                <option value="Estabilidad">
+                    Estabilidad
+                </option>
+
+                <option value="Cardiovascular">
+                    Cardiovascular
+                </option>
+
+                <option value="Funcional">
+                    Funcional
+                </option>
+
+                <option value="Rehabilitación">
+                    Rehabilitación
+                </option>
+
+            </select>
+
+
+            <label>
+                Equipamiento
+            </label>
+
+            <select id="equipamiento">
+
+                <option value="">
+                    Seleccionar equipamiento
+                </option>
+
+                <option value="Peso corporal">
+                    Peso corporal
+                </option>
+
+                <option value="Mancuernas">
+                    Mancuernas
+                </option>
+
+                <option value="Barra">
+                    Barra
+                </option>
+
+                <option value="Kettlebell">
+                    Kettlebell
+                </option>
+
+                <option value="Máquinas">
+                    Máquinas
+                </option>
+
+                <option value="Bandas">
+                    Bandas
+                </option>
+
+                <option value="TRX">
+                    TRX
+                </option>
+
+                <option value="Cable">
+                    Cable
+                </option>
+
+                <option value="Banco">
+                    Banco
+                </option>
+
+                <option value="Otro">
+                    Otro
+                </option>
+
+            </select>
+
+
+            <label>
+                Nivel
+            </label>
+
+            <select id="nivel">
+
+                <option value="">
+                    Seleccionar nivel
+                </option>
+
+                <option value="Principiante">
+                    Principiante
+                </option>
+
+                <option value="Intermedio">
+                    Intermedio
+                </option>
+
+                <option value="Avanzado">
+                    Avanzado
+                </option>
+
+            </select>
+
+
+            <label>
+                Descripción técnica
+            </label>
+
+            <textarea
+                id="descripcion"
+                placeholder="Describe la ejecución correcta del ejercicio..."
+            ></textarea>
+
+
+            <label>
+                Precauciones / restricciones
+            </label>
+
+            <textarea
+                id="precauciones"
+                placeholder="Ej: evitar en lesión de hombro..."
+            ></textarea>
+
+
+            <button
+                class="boton"
+                onclick="guardarEjercicio()">
+
+                + GUARDAR EJERCICIO
+
+            </button>
+
+
+            <div
+                id="mensaje"
+                class="mensaje">
+            </div>
+
+        </div>
+
+
+        <!-- ═══════════════════════════════════════════════════
+             6. LISTADO DE EJERCICIOS
+        ═══════════════════════════════════════════════════ -->
+
+        <div class="tarjeta">
+
+            <h2>📋 Biblioteca de ejercicios</h2>
+
+            <div id="listaEjercicios"></div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         7. JAVASCRIPT
+    ═══════════════════════════════════════════════════════ -->
+
+    <script>
+
+        // ═══════════════════════════════════════════════════════
+        // 7.1 VARIABLES Y LOCALSTORAGE
+        // ═══════════════════════════════════════════════════════
+
+        let ejercicios = JSON.parse(
+            localStorage.getItem("ejerciciosDexoneFit")
+        ) || [];
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.2 GUARDAR EJERCICIO
+        // ═══════════════════════════════════════════════════════
+
+        function guardarEjercicio() {
+
+            const nombre =
+                document.getElementById("nombre").value.trim();
+
+            const grupo =
+                document.getElementById("grupo").value;
+
+            const patron =
+                document.getElementById("patron").value;
+
+            const tipo =
+                document.getElementById("tipo").value;
+
+            const equipamiento =
+                document.getElementById("equipamiento").value;
+
+            const nivel =
+                document.getElementById("nivel").value;
+
+            const descripcion =
+                document.getElementById("descripcion").value.trim();
+
+            const precauciones =
+                document.getElementById("precauciones").value.trim();
+
+
+            if (!nombre || !grupo) {
+
+                document.getElementById("mensaje").textContent =
+                    "⚠️ El nombre y el grupo muscular son obligatorios.";
+
+                return;
+            }
+
+
+            const nuevoEjercicio = {
+
+                id: Date.now(),
+
+                nombre: nombre,
+
+                grupo: grupo,
+
+                patron: patron,
+
+                tipo: tipo,
+
+                equipamiento: equipamiento,
+
+                nivel: nivel,
+
+                descripcion: descripcion,
+
+                precauciones: precauciones
+
+            };
+
+
+            ejercicios.push(nuevoEjercicio);
+
+
+            localStorage.setItem(
+                "ejerciciosDexoneFit",
+                JSON.stringify(ejercicios)
+            );
+
+
+            limpiarFormulario();
+
+
+            document.getElementById("mensaje").textContent =
+                "✅ Ejercicio guardado correctamente.";
+
+
+            mostrarEjercicios();
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.3 LIMPIAR FORMULARIO
+        // ═══════════════════════════════════════════════════════
+
+        function limpiarFormulario() {
+
+            document.getElementById("nombre").value = "";
+
+            document.getElementById("grupo").value = "";
+
+            document.getElementById("patron").value = "";
+
+            document.getElementById("tipo").value = "";
+
+            document.getElementById("equipamiento").value = "";
+
+            document.getElementById("nivel").value = "";
+
+            document.getElementById("descripcion").value = "";
+
+            document.getElementById("precauciones").value = "";
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.4 MOSTRAR EJERCICIOS
+        // ═══════════════════════════════════════════════════════
+
+        function mostrarEjercicios() {
+
+            const lista =
+                document.getElementById("listaEjercicios");
+
+
+            if (!lista) {
+                return;
+            }
+
+
+            lista.innerHTML = "";
+
+
+            if (ejercicios.length === 0) {
+
+                lista.innerHTML =
+                    "<p>No hay ejercicios registrados.</p>";
+
+                return;
+
+            }
+
+
+            ejercicios.forEach(function(ejercicio, indice) {
+
+                const tarjeta =
+                    document.createElement("div");
+
+
+                tarjeta.className =
+                    "ejercicio";
+
+
+                tarjeta.innerHTML = `
+
+                    <h3>
+                        🏃 ${ejercicio.nombre}
+                    </h3>
+
+                    <p>
+                        <strong>Grupo muscular:</strong>
+                        ${ejercicio.grupo}
+                    </p>
+
+                    <p>
+                        <strong>Patrón:</strong>
+                        ${ejercicio.patron || "No registrado"}
+                    </p>
+
+                    <p>
+                        <strong>Tipo:</strong>
+                        ${ejercicio.tipo || "No registrado"}
+                    </p>
+
+                    <p>
+                        <strong>Equipamiento:</strong>
+                        ${ejercicio.equipamiento || "No registrado"}
+                    </p>
+
+                    <p>
+                        <strong>Nivel:</strong>
+                        ${ejercicio.nivel || "No registrado"}
+                    </p>
+
+                    <p>
+                        <strong>Descripción:</strong>
+                        ${ejercicio.descripcion || "Sin descripción"}
+                    </p>
+
+                    <p>
+                        <strong>Precauciones:</strong>
+                        ${ejercicio.precauciones || "Sin precauciones registradas"}
+                    </p>
+
+                    <button
+                        class="eliminar"
+                        onclick="eliminarEjercicio(${indice})">
+
+                        🗑️ Eliminar
+
+                    </button>
+
+                `;
+
+
+                lista.appendChild(tarjeta);
+
+            });
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.5 ELIMINAR EJERCICIO
+        // ═══════════════════════════════════════════════════════
+
+        function eliminarEjercicio(indice) {
+
+            const confirmar =
+                confirm(
+                    "¿Deseas eliminar este ejercicio?"
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            ejercicios.splice(indice, 1);
+
+
+            localStorage.setItem(
+                "ejerciciosDexoneFit",
+                JSON.stringify(ejercicios)
+            );
+
+
+            mostrarEjercicios();
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.6 CARGAR EJERCICIOS AL INICIAR
+        // ═══════════════════════════════════════════════════════
+
+        mostrarEjercicios();
+
+
+    </script>
+
+
+</body>
+
+</html>

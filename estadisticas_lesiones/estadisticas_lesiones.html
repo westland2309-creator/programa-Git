@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Estadísticas de Lesiones - DEXONEFIT</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            color: #333;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .tarjeta h2 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        /* INDICADORES */
+
+        .indicadores {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .indicador {
+            background: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .numero {
+            font-size: 32px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        .indicador p {
+            margin-bottom: 0;
+            font-weight: bold;
+        }
+
+        /* ESTADOS */
+
+        .estados {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .estado {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .activa {
+            background: #fdeaea;
+            color: #c62828;
+        }
+
+        .recuperacion {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .controlada {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .recuperada {
+            background: #e8f8f1;
+            color: #007a4d;
+        }
+
+        .estado-numero {
+            display: block;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        /* BARRAS */
+
+        .fila {
+            margin-bottom: 20px;
+        }
+
+        .fila-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .barra {
+            width: 100%;
+            height: 25px;
+            background: #e5e5e5;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progreso {
+            height: 100%;
+            width: 0%;
+            background: #ff6d00;
+            border-radius: 20px;
+            transition: width 0.6s;
+        }
+
+        /* DOS COLUMNAS */
+
+        .columnas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* DOLOR */
+
+        .dolor-box {
+            text-align: center;
+            padding: 25px;
+            background: #f7f7f7;
+            border-radius: 12px;
+        }
+
+        .dolor-numero {
+            font-size: 45px;
+            font-weight: bold;
+            color: #ff6d00;
+        }
+
+        /* SEMÁFORO */
+
+        .semaforo {
+            text-align: center;
+        }
+
+        .circulo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .verde {
+            background: #d9f7e8;
+        }
+
+        .amarillo {
+            background: #fff3cd;
+        }
+
+        .rojo {
+            background: #f8d7da;
+        }
+
+        #estadoGeneral {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* TABLA */
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #00a86b;
+            color: white;
+        }
+
+        /* MENSAJE */
+
+        .sin-datos {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-size: 17px;
+        }
+
+        /* BOTONES */
+
+        .botones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 13px 18px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-historial {
+            background: #ff6d00;
+            color: white;
+        }
+
+        .btn-inicio {
+            background: #777;
+            color: white;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .indicadores {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .estados {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .columnas {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .contenedor {
+                padding: 12px;
+            }
+
+            .tarjeta {
+                padding: 18px;
+            }
+
+            .indicadores,
+            .estados {
+                grid-template-columns: 1fr;
+            }
+
+            .botones button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>📊 Estadísticas de lesiones</p>
+
+</header>
+
+
+<div class="contenedor">
+
+
+    <!-- ========================= -->
+    <!-- RESUMEN GENERAL -->
+    <!-- ========================= -->
+
+    <div class="tarjeta">
+
+        <h2>📊 Resumen general</h2>
+
+        <div class="indicadores">
+
+            <div class="indicador">
+
+                <div
+                    class="numero"
+                    id="total">
+                    0
+                </div>
+
+                <p>Total lesiones</p>
+
+            </div>
+
+
+            <div class="indicador">
+
+                <div
+                    class="numero"
+                    id="usuarios">
+                    0
+                </div>
+
+                <p>Usuarios afectados</p>
+
+            </div>
+
+
+            <div class="indicador">
+
+                <div
+                    class="numero"
+                    id="zonas">
+                    0
+                </div>
+
+                <p>Zonas afectadas</p>
+
+            </div>
+
+
+            <div class="indicador">
+
+                <div
+                    class="numero"
+                    id="dolorPromedio">
+                    0
+                </div>
+
+                <p>Dolor promedio / 10</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ESTADOS -->
+    <!-- ========================= -->
+
+    <div class="tarjeta">
+
+        <h2>🚦 Estado de las lesiones</h2>
+
+        <div class="estados">
+
+            <div class="estado activa">
+
+                <span
+                    class="estado-numero"
+                    id="activas">
+                    0
+                </span>
+
+                🔴 Activas
+
+            </div>
+
+
+            <div class="estado recuperacion">
+
+                <span
+                    class="estado-numero"
+                    id="recuperacion">
+                    0
+                </span>
+
+                🟡 En recuperación
+
+            </div>
+
+
+            <div class="estado controlada">
+
+                <span
+                    class="estado-numero"
+                    id="controladas">
+                    0
+                </span>
+
+                🔵 Controladas
+
+            </div>
+
+
+            <div class="estado recuperada">
+
+                <span
+                    class="estado-numero"
+                    id="recuperadas">
+                    0
+                </span>
+
+                🟢 Recuperadas
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- NIVEL GENERAL -->
+    <!-- ========================= -->
+
+    <div class="tarjeta semaforo">
+
+        <h2>🚦 Situación general</h2>
+
+        <div
+            id="circulo"
+            class="circulo verde">
+
+            😊
+
+        </div>
+
+        <div id="estadoGeneral">
+            Sin lesiones
+        </div>
+
+        <p id="descripcion">
+            Actualmente no hay lesiones registradas.
+        </p>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ZONAS Y TIPOS -->
+    <!-- ========================= -->
+
+    <div class="columnas">
+
+
+        <div class="tarjeta">
+
+            <h2>🦴 Lesiones por zona corporal</h2>
+
+            <div id="zonasGrafico">
+
+                <div class="sin-datos">
+                    No hay datos registrados.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta">
+
+            <h2>🩹 Lesiones por tipo</h2>
+
+            <div id="tiposGrafico">
+
+                <div class="sin-datos">
+                    No hay datos registrados.
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- DOLOR -->
+    <!-- ========================= -->
+
+    <div class="tarjeta">
+
+        <h2>💢 Análisis del dolor</h2>
+
+        <div class="dolor-box">
+
+            <div class="dolor-numero"
+                 id="dolorGrande">
+
+                0 / 10
+
+            </div>
+
+            <p>
+                Nivel promedio de dolor registrado
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ÚLTIMAS LESIONES -->
+    <!-- ========================= -->
+
+    <div class="tarjeta">
+
+        <h2>📋 Resumen de lesiones registradas</h2>
+
+        <div class="tabla-contenedor">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Usuario</th>
+                        <th>Zona</th>
+                        <th>Tipo</th>
+                        <th>Dolor</th>
+                        <th>Estado</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tablaLesiones">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- BOTONES -->
+    <!-- ========================= -->
+
+    <div class="tarjeta">
+
+        <div class="botones">
+
+            <button
+                class="btn-historial"
+                onclick="abrirHistorial()">
+
+                📋 VOLVER A LESIONES
+
+            </button>
+
+
+            <button
+                class="btn-inicio"
+                onclick="volverInicio()">
+
+                🏠 VOLVER AL INICIO
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================
+   OBTENER LESIONES
+========================================= */
+
+function obtenerLesiones() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                "lesionesDexoneFit"
+            )
+        ) || [];
+
+    }
+
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================
+   LESIONES
+========================================= */
+
+let lesiones =
+    obtenerLesiones();
+
+
+/* =========================================
+   CONTAR
+========================================= */
+
+function contarPorCampo(
+    datos,
+    campo
+) {
+
+    const resultado = {};
+
+    datos.forEach(function(item) {
+
+        const valor =
+            item[campo] ||
+            "No registrado";
+
+        resultado[valor] =
+            (resultado[valor] || 0) + 1;
+
+    });
+
+    return resultado;
+
+}
+
+
+/* =========================================
+   BARRAS
+========================================= */
+
+function mostrarBarras(
+    datos,
+    contenedorId
+) {
+
+    const contenedor =
+        document.getElementById(
+            contenedorId
+        );
+
+
+    contenedor.innerHTML = "";
+
+
+    if (lesiones.length === 0) {
+
+        contenedor.innerHTML =
+            `
+            <div class="sin-datos">
+                No hay datos registrados.
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    const ordenados =
+        Object.entries(datos)
+        .sort(
+            function(a, b) {
+                return b[1] - a[1];
+            }
+        );
+
+
+    ordenados.forEach(
+        function(item) {
+
+            const nombre =
+                item[0];
+
+            const cantidad =
+                item[1];
+
+            const porcentaje =
+                (cantidad /
+                lesiones.length) * 100;
+
+
+            const fila =
+                document.createElement(
+                    "div"
+                );
+
+
+            fila.className =
+                "fila";
+
+
+            fila.innerHTML = `
+
+                <div class="fila-info">
+
+                    <span>${nombre}</span>
+
+                    <span>${cantidad}</span>
+
+                </div>
+
+                <div class="barra">
+
+                    <div
+                        class="progreso"
+                        style="width:${porcentaje}%">
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            contenedor.appendChild(
+                fila
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   ESTADÍSTICAS PRINCIPALES
+========================================= */
+
+function mostrarEstadisticas() {
+
+    const total =
+        lesiones.length;
+
+
+    document.getElementById(
+        "total"
+    ).textContent =
+        total;
+
+
+    /* USUARIOS */
+
+    const usuarios =
+        new Set();
+
+
+    lesiones.forEach(
+        function(lesion) {
+
+            if (lesion.usuario) {
+
+                usuarios.add(
+                    lesion.usuario
+                );
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "usuarios"
+    ).textContent =
+        usuarios.size;
+
+
+    /* ZONAS */
+
+    const zonas =
+        new Set();
+
+
+    lesiones.forEach(
+        function(lesion) {
+
+            if (lesion.zona) {
+
+                zonas.add(
+                    lesion.zona
+                );
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "zonas"
+    ).textContent =
+        zonas.size;
+
+
+    /* ESTADOS */
+
+    let activas = 0;
+    let recuperacion = 0;
+    let controladas = 0;
+    let recuperadas = 0;
+
+
+    lesiones.forEach(
+        function(lesion) {
+
+            if (
+                lesion.estado ===
+                "Activa"
+            ) {
+
+                activas++;
+
+            }
+
+
+            else if (
+                lesion.estado ===
+                "En recuperación"
+            ) {
+
+                recuperacion++;
+
+            }
+
+
+            else if (
+                lesion.estado ===
+                "Controlada"
+            ) {
+
+                controladas++;
+
+            }
+
+
+            else if (
+                lesion.estado ===
+                "Recuperada"
+            ) {
+
+                recuperadas++;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "activas"
+    ).textContent =
+        activas;
+
+
+    document.getElementById(
+        "recuperacion"
+    ).textContent =
+        recuperacion;
+
+
+    document.getElementById(
+        "controladas"
+    ).textContent =
+        controladas;
+
+
+    document.getElementById(
+        "recuperadas"
+    ).textContent =
+        recuperadas;
+
+
+    /* DOLOR */
+
+    let sumaDolor = 0;
+    let cantidadDolor = 0;
+
+
+    lesiones.forEach(
+        function(lesion) {
+
+            if (
+                lesion.dolor !== "" &&
+                lesion.dolor !== undefined &&
+                lesion.dolor !== null
+            ) {
+
+                const dolor =
+                    Number(
+                        lesion.dolor
+                    );
+
+
+                if (
+                    !isNaN(dolor)
+                ) {
+
+                    sumaDolor +=
+                        dolor;
+
+                    cantidadDolor++;
+
+                }
+
+            }
+
+        }
+    );
+
+
+    const promedioDolor =
+        cantidadDolor > 0
+            ? sumaDolor /
+              cantidadDolor
+            : 0;
+
+
+    document.getElementById(
+        "dolorPromedio"
+    ).textContent =
+        promedioDolor.toFixed(1);
+
+
+    document.getElementById(
+        "dolorGrande"
+    ).textContent =
+        promedioDolor.toFixed(1)
+        + " / 10";
+
+
+    /* SEMÁFORO */
+
+    actualizarSemaforo(
+        activas,
+        recuperacion,
+        total
+    );
+
+
+    /* ZONAS */
+
+    mostrarBarras(
+        contarPorCampo(
+            lesiones,
+            "zona"
+        ),
+        "zonasGrafico"
+    );
+
+
+    /* TIPOS */
+
+    mostrarBarras(
+        contarPorCampo(
+            lesiones,
+            "tipo"
+        ),
+        "tiposGrafico"
+    );
+
+
+    /* TABLA */
+
+    mostrarTabla();
+
+}
+
+
+/* =========================================
+   SEMÁFORO
+========================================= */
+
+function actualizarSemaforo(
+    activas,
+    recuperacion,
+    total
+) {
+
+    const circulo =
+        document.getElementById(
+            "circulo"
+        );
+
+
+    const estado =
+        document.getElementById(
+            "estadoGeneral"
+        );
+
+
+    const descripcion =
+        document.getElementById(
+            "descripcion"
+        );
+
+
+    circulo.className =
+        "circulo";
+
+
+    if (total === 0) {
+
+        circulo.classList.add(
+            "verde"
+        );
+
+        circulo.textContent =
+            "😊";
+
+        estado.textContent =
+            "SIN LESIONES";
+
+
+        descripcion.textContent =
+            "Actualmente no hay lesiones registradas.";
+
+        return;
+
+    }
+
+
+    const porcentajeActivas =
+        (activas / total) * 100;
+
+
+    if (
+        porcentajeActivas <= 20
+    ) {
+
+        circulo.classList.add(
+            "verde"
+        );
+
+        circulo.textContent =
+            "😊";
+
+        estado.textContent =
+            "SITUACIÓN FAVORABLE";
+
+
+        descripcion.textContent =
+            "La mayoría de las lesiones se encuentran controladas o recuperadas.";
+
+    }
+
+
+    else if (
+        porcentajeActivas <= 50
+    ) {
+
+        circulo.classList.add(
+            "amarillo"
+        );
+
+        circulo.textContent =
+            "😐";
+
+        estado.textContent =
+            "ATENCIÓN";
+
+
+        descripcion.textContent =
+            "Existe una cantidad moderada de lesiones activas. Se recomienda seguimiento.";
+
+    }
+
+
+    else {
+
+        circulo.classList.add(
+            "rojo"
+        );
+
+        circulo.textContent =
+            "⚠️";
+
+        estado.textContent =
+            "ALERTA";
+
+
+        descripcion.textContent =
+            "Existe una proporción alta de lesiones activas. Se recomienda intervención y seguimiento.";
+
+    }
+
+}
+
+
+/* =========================================
+   TABLA
+========================================= */
+
+function mostrarTabla() {
+
+    const tabla =
+        document.getElementById(
+            "tablaLesiones"
+        );
+
+
+    tabla.innerHTML = "";
+
+
+    if (
+        lesiones.length === 0
+    ) {
+
+        tabla.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    style="text-align:center; padding:25px;">
+
+                    No hay lesiones registradas.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    lesiones
+        .slice()
+        .reverse()
+        .forEach(
+            function(lesion) {
+
+                const fila =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                fila.innerHTML = `
+
+                    <td>
+                        ${lesion.usuario || "No registrado"}
+                    </td>
+
+                    <td>
+                        ${lesion.zona || "No registrada"}
+                    </td>
+
+                    <td>
+                        ${lesion.tipo || "No registrado"}
+                    </td>
+
+                    <td>
+                        ${lesion.dolor !== undefined &&
+                          lesion.dolor !== ""
+                            ? lesion.dolor + " / 10"
+                            : "—"}
+                    </td>
+
+                    <td>
+                        ${lesion.estado || "No registrado"}
+                    </td>
+
+                `;
+
+
+                tabla.appendChild(
+                    fila
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================
+   NAVEGACIÓN
+========================================= */
+
+function abrirHistorial() {
+
+    window.location.href =
+        "lesiones.html";
+
+}
+
+
+function volverInicio() {
+
+    window.location.href =
+        "../Menú.html";
+
+}
+
+
+/* =========================================
+   INICIAR
+========================================= */
+
+mostrarEstadisticas();
+
+</script>
+
+
+</body>
+
+</html>

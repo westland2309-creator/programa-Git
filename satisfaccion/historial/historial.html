@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Historial de Satisfacción - DEXONEFIT</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            color: #333;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 6px 0 0;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .tarjeta h2 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .total {
+            font-weight: bold;
+            color: #00a86b;
+            margin-bottom: 20px;
+        }
+
+        .encuesta {
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+
+        .encuesta h3 {
+            margin-top: 0;
+            color: #00a86b;
+        }
+
+        .estrellas {
+            color: #ffb400;
+            font-size: 25px;
+            margin: 10px 0;
+        }
+
+        .dato {
+            margin: 8px 0;
+        }
+
+        .dato strong {
+            color: #444;
+        }
+
+        .comentario {
+            background: white;
+            border-left: 4px solid #00a86b;
+            padding: 12px;
+            margin-top: 12px;
+        }
+
+        .sin-datos {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .botones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 13px 18px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-nueva {
+            background: #00a86b;
+            color: white;
+        }
+
+        .btn-estadisticas {
+            background: #1976d2;
+            color: white;
+        }
+
+        .btn-inicio {
+            background: #777;
+            color: white;
+        }
+
+        .btn-borrar {
+            background: #d32f2f;
+            color: white;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 650px) {
+
+            .contenedor {
+                padding: 12px;
+            }
+
+            .tarjeta {
+                padding: 18px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>Historial de satisfacción</p>
+
+</header>
+
+
+<div class="contenedor">
+
+
+    <div class="tarjeta">
+
+        <h2>
+            Encuestas registradas
+        </h2>
+
+        <div
+            id="total"
+            class="total">
+
+            Total de encuestas: 0
+
+        </div>
+
+
+        <div id="listaEncuestas">
+
+        </div>
+
+
+        <button
+            class="btn-borrar"
+            onclick="borrarHistorial()">
+
+            🗑️ Borrar historial
+
+        </button>
+
+    </div>
+
+
+    <div class="tarjeta">
+
+        <div class="botones">
+
+
+            <button
+                class="btn-nueva"
+                onclick="nuevaEncuesta()">
+
+                😊 Nueva encuesta
+
+            </button>
+
+
+            <button
+                class="btn-estadisticas"
+                onclick="abrirEstadisticas()">
+
+                📊 Ver estadísticas
+
+            </button>
+
+
+            <button
+                class="btn-inicio"
+                onclick="volverInicio()">
+
+                🏠 Volver al inicio
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+function cargarHistorial() {
+
+
+    const encuestas =
+        JSON.parse(
+            localStorage.getItem(
+                "satisfaccionesDexoneFit"
+            )
+        ) || [];
+
+
+    const lista =
+        document.getElementById(
+            "listaEncuestas"
+        );
+
+
+    const total =
+        document.getElementById(
+            "total"
+        );
+
+
+    total.textContent =
+        "Total de encuestas: "
+        + encuestas.length;
+
+
+    lista.innerHTML = "";
+
+
+    if (encuestas.length === 0) {
+
+        lista.innerHTML = `
+
+            <div class="sin-datos">
+
+                <h3>
+                    No hay encuestas registradas
+                </h3>
+
+                <p>
+                    Las encuestas que guardes
+                    aparecerán aquí.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    encuestas
+        .slice()
+        .reverse()
+        .forEach(function(encuesta) {
+
+
+            const tarjeta =
+                document.createElement(
+                    "div"
+                );
+
+
+            tarjeta.className =
+                "encuesta";
+
+
+            let estrellas = "";
+
+
+            for (
+                let i = 1;
+                i <= 5;
+                i++
+            ) {
+
+                if (
+                    i <=
+                    Number(
+                        encuesta.calificacion
+                    )
+                ) {
+
+                    estrellas += "★";
+
+                } else {
+
+                    estrellas += "☆";
+
+                }
+
+            }
+
+
+            tarjeta.innerHTML = `
+
+                <h3>
+                    ${escapar(
+                        encuesta.usuario
+                    )}
+                </h3>
+
+                <div class="estrellas">
+                    ${estrellas}
+                </div>
+
+                <div class="dato">
+
+                    <strong>
+                        Calificación:
+                    </strong>
+
+                    ${encuesta.calificacion}/5
+
+                </div>
+
+                <div class="dato">
+
+                    <strong>
+                        Fecha:
+                    </strong>
+
+                    ${escapar(
+                        encuesta.fecha
+                    )}
+
+                </div>
+
+                <div class="dato">
+
+                    <strong>
+                        Entrenador:
+                    </strong>
+
+                    ${dato(
+                        encuesta.entrenador
+                    )}
+
+                </div>
+
+                <div class="dato">
+
+                    <strong>
+                        Entrenamiento:
+                    </strong>
+
+                    ${dato(
+                        encuesta.entrenamiento
+                    )}
+
+                </div>
+
+                <div class="dato">
+
+                    <strong>
+                        Instalaciones:
+                    </strong>
+
+                    ${dato(
+                        encuesta.instalaciones
+                    )}
+
+                </div>
+
+                <div class="dato">
+
+                    <strong>
+                        Clases:
+                    </strong>
+
+                    ${dato(
+                        encuesta.clases
+                    )}
+
+                </div>
+
+                <div class="comentario">
+
+                    <strong>
+                        Comentario:
+                    </strong>
+
+                    <br>
+
+                    ${dato(
+                        encuesta.comentario
+                    )}
+
+                </div>
+
+            `;
+
+
+            lista.appendChild(
+                tarjeta
+            );
+
+        });
+
+}
+
+
+function dato(valor) {
+
+    if (
+        valor === undefined ||
+        valor === null ||
+        valor === ""
+    ) {
+
+        return "Sin respuesta";
+
+    }
+
+    return escapar(
+        String(valor)
+    );
+
+}
+
+
+function escapar(texto) {
+
+    return texto
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* NUEVA ENCUESTA */
+
+function nuevaEncuesta() {
+
+    window.location.href =
+        "../satisfaccion.html";
+
+}
+
+
+/* ESTADÍSTICAS */
+
+function abrirEstadisticas() {
+
+    window.location.href =
+        "../estadisticas/estadisticas.html";
+
+}
+
+
+/* INICIO */
+
+function volverInicio() {
+
+    window.location.href =
+        "../../menu/menu.html";
+
+}
+
+
+/* BORRAR HISTORIAL */
+
+function borrarHistorial() {
+
+
+    const confirmar =
+        confirm(
+            "¿Seguro que deseas borrar todas las encuestas?"
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "satisfaccionesDexoneFit"
+    );
+
+
+    cargarHistorial();
+
+}
+
+
+cargarHistorial();
+
+
+</script>
+
+
+</body>
+
+</html>

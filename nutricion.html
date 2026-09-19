@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nutrición - DexoneFit</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        header button:hover {
+            background: #e65100;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .plan {
+            border-left: 5px solid #ff6d00;
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .plan h3 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>DEXONE FIT</h1>
+
+        <p>Planificación nutricional</p>
+
+        <button onclick="window.location.href='menu.html'">
+            ← VOLVER AL MENÚ
+        </button>
+
+    </header>
+
+
+    <div class="contenedor">
+
+
+        <div class="tarjeta">
+
+            <h2>Crear plan de alimentación</h2>
+
+
+            <label>Usuario</label>
+
+            <select id="usuario">
+
+                <option value="">
+                    Seleccionar usuario
+                </option>
+
+            </select>
+
+
+            <label>Objetivo</label>
+
+            <select id="objetivo">
+
+                <option value="">
+                    Seleccionar objetivo
+                </option>
+
+                <option value="Pérdida de grasa">
+                    Pérdida de grasa
+                </option>
+
+                <option value="Ganancia de masa muscular">
+                    Ganancia de masa muscular
+                </option>
+
+                <option value="Recomposición corporal">
+                    Recomposición corporal
+                </option>
+
+                <option value="Mantenimiento">
+                    Mantenimiento
+                </option>
+
+            </select>
+
+
+            <label>Peso (kg)</label>
+
+            <input
+                type="number"
+                id="peso"
+                placeholder="Ej: 75"
+                step="0.1"
+            >
+
+
+            <label>Estatura (cm)</label>
+
+            <input
+                type="number"
+                id="estatura"
+                placeholder="Ej: 175"
+            >
+
+
+            <label>Número de comidas</label>
+
+            <select id="comidas">
+
+                <option value="">
+                    Seleccionar
+                </option>
+
+                <option value="3 comidas">
+                    3 comidas
+                </option>
+
+                <option value="4 comidas">
+                    4 comidas
+                </option>
+
+                <option value="5 comidas">
+                    5 comidas
+                </option>
+
+                <option value="6 comidas">
+                    6 comidas
+                </option>
+
+            </select>
+
+
+            <label>Calorías diarias</label>
+
+            <input
+                type="number"
+                id="calorias"
+                placeholder="Ej: 2200"
+            >
+
+
+            <label>Recomendaciones</label>
+
+            <textarea
+                id="recomendaciones"
+                placeholder="Ej: Priorizar proteína, frutas, verduras y adecuada hidratación."
+            ></textarea>
+
+
+            <button class="boton" onclick="guardarPlan()">
+                + GUARDAR PLAN NUTRICIONAL
+            </button>
+
+
+            <div id="mensaje" class="mensaje"></div>
+
+        </div>
+
+
+        <div class="tarjeta">
+
+            <h2>Planes nutricionales registrados</h2>
+
+            <div id="listaPlanes"></div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let planes = JSON.parse(
+            localStorage.getItem("planesDexoneFit")
+        ) || [];
+
+
+        let usuarios = JSON.parse(
+            localStorage.getItem("usuariosDexoneFit")
+        ) || [];
+
+
+        function cargarUsuarios() {
+
+            const select =
+                document.getElementById("usuario");
+
+            usuarios.forEach(function(usuario) {
+
+                const opcion =
+                    document.createElement("option");
+
+                opcion.value = usuario.nombre;
+
+                opcion.textContent = usuario.nombre;
+
+                select.appendChild(opcion);
+
+            });
+
+        }
+
+
+        function guardarPlan() {
+
+            const usuario =
+                document.getElementById("usuario").value;
+
+            const objetivo =
+                document.getElementById("objetivo").value;
+
+            const peso =
+                document.getElementById("peso").value;
+
+            const estatura =
+                document.getElementById("estatura").value;
+
+            const comidas =
+                document.getElementById("comidas").value;
+
+            const calorias =
+                document.getElementById("calorias").value;
+
+            const recomendaciones =
+                document.getElementById("recomendaciones").value.trim();
+
+
+            if (
+                !usuario ||
+                !objetivo ||
+                !peso ||
+                !estatura ||
+                !comidas ||
+                !calorias ||
+                !recomendaciones
+            ) {
+
+                document.getElementById("mensaje").textContent =
+                    "⚠️ Completa todos los campos.";
+
+                return;
+            }
+
+
+            const nuevoPlan = {
+
+                usuario: usuario,
+
+                objetivo: objetivo,
+
+                peso: peso,
+
+                estatura: estatura,
+
+                comidas: comidas,
+
+                calorias: calorias,
+
+                recomendaciones: recomendaciones
+
+            };
+
+
+            planes.push(nuevoPlan);
+
+
+            localStorage.setItem(
+                "planesDexoneFit",
+                JSON.stringify(planes)
+            );
+
+
+            document.getElementById("usuario").value = "";
+
+            document.getElementById("objetivo").value = "";
+
+            document.getElementById("peso").value = "";
+
+            document.getElementById("estatura").value = "";
+
+            document.getElementById("comidas").value = "";
+
+            document.getElementById("calorias").value = "";
+
+            document.getElementById("recomendaciones").value = "";
+
+
+            document.getElementById("mensaje").textContent =
+                "✅ Plan nutricional guardado correctamente.";
+
+
+            mostrarPlanes();
+
+        }
+
+
+        function mostrarPlanes() {
+
+            const lista =
+                document.getElementById("listaPlanes");
+
+            lista.innerHTML = "";
+
+
+            if (planes.length === 0) {
+
+                lista.innerHTML =
+                    "<p>No hay planes nutricionales registrados.</p>";
+
+                return;
+
+            }
+
+
+            planes.forEach(function(plan, indice) {
+
+                const tarjeta =
+                    document.createElement("div");
+
+                tarjeta.className = "plan";
+
+
+                tarjeta.innerHTML = `
+
+                    <h3>🍎 Plan de ${plan.usuario}</h3>
+
+                    <p>
+                        <strong>Objetivo:</strong>
+                        ${plan.objetivo}
+                    </p>
+
+                    <p>
+                        <strong>Peso:</strong>
+                        ${plan.peso} kg
+                    </p>
+
+                    <p>
+                        <strong>Estatura:</strong>
+                        ${plan.estatura} cm
+                    </p>
+
+                    <p>
+                        <strong>Comidas:</strong>
+                        ${plan.comidas}
+                    </p>
+
+                    <p>
+                        <strong>Calorías:</strong>
+                        ${plan.calorias} kcal
+                    </p>
+
+                    <p>
+                        <strong>Recomendaciones:</strong>
+                        ${plan.recomendaciones}
+                    </p>
+
+                    <button
+                        class="eliminar"
+                        onclick="eliminarPlan(${indice})">
+                        Eliminar
+                    </button>
+
+                `;
+
+
+                lista.appendChild(tarjeta);
+
+            });
+
+        }
+
+
+        function eliminarPlan(indice) {
+
+            planes.splice(indice, 1);
+
+
+            localStorage.setItem(
+                "planesDexoneFit",
+                JSON.stringify(planes)
+            );
+
+
+            mostrarPlanes();
+
+        }
+
+
+        cargarUsuarios();
+
+        mostrarPlanes();
+
+    </script>
+
+</body>
+
+</html>

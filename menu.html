@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Menú DEXONEFIT</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+
+        /* ENCABEZADO */
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+
+        header p {
+            margin: 8px 0 0;
+        }
+
+
+        /* CONTENEDOR */
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+
+        /* CATEGORÍAS */
+
+        .categoria {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+        }
+
+
+        /* BOTÓN PRINCIPAL */
+
+        .boton-categoria {
+            width: 100%;
+            border: none;
+            background: white;
+
+            padding: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            cursor: pointer;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            color: #333;
+
+            transition: 0.2s;
+        }
+
+
+        .boton-categoria:hover {
+            background: #f7f7f7;
+        }
+
+
+        .titulo-categoria {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .icono-categoria {
+            font-size: 30px;
+        }
+
+
+        .flecha {
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+
+        /* CONTENIDO DESPLEGABLE */
+
+        .contenido-categoria {
+            display: none;
+
+            padding: 0 20px 20px;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 12px;
+        }
+
+
+        .contenido-categoria.activo {
+            display: grid;
+        }
+
+
+        /* BOTONES INTERNOS */
+
+        .boton-opcion {
+            background: #f2f4f7;
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 16px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            color: #333;
+
+            text-align: left;
+
+            transition: 0.2s;
+        }
+
+
+        .boton-opcion:hover {
+            background: #e4e8ec;
+            transform: translateX(4px);
+        }
+
+
+        /* BOTÓN SATISFACCIÓN */
+
+        .boton-satisfaccion {
+            background: #e8f8f1;
+
+            border: 2px solid #00a86b;
+
+            color: #007a4d;
+        }
+
+
+        .boton-satisfaccion:hover {
+            background: #d8f3e8;
+        }
+
+
+        /* BOTÓN VOLVER */
+
+        .volver {
+            background: #ff6d00;
+
+            color: white;
+
+            margin-top: 20px;
+
+            padding: 13px 28px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            font-size: 15px;
+        }
+
+
+        .volver:hover {
+            background: #e65100;
+        }
+
+
+        /* CELULAR */
+
+        @media (max-width: 600px) {
+
+            header h1 {
+                font-size: 26px;
+            }
+
+            .contenido-categoria {
+                grid-template-columns: 1fr;
+            }
+
+            .boton-categoria {
+                font-size: 16px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ENCABEZADO -->
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>Panel principal de gestión</p>
+
+</header>
+
+
+
+<div class="contenedor">
+
+
+    <!-- ========================= -->
+    <!-- GESTIÓN DE USUARIOS -->
+    <!-- ========================= -->
+
+    <div class="categoria">
+
+        <button class="boton-categoria"
+                onclick="alternarMenu(this)">
+
+            <span class="titulo-categoria">
+
+                <span class="icono-categoria">👥</span>
+
+                GESTIÓN DE USUARIOS
+
+            </span>
+
+            <span class="flecha">▼</span>
+
+        </button>
+
+
+        <div class="contenido-categoria">
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='usuarios.html'">
+
+                👤 Usuarios
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='membresias.html'">
+
+                🎫 Membresías
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='novedades.html'">
+
+                🔔 Novedades
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='mediciones.html'">
+
+                📏 Mediciones
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- ENTRENAMIENTO -->
+    <!-- ========================= -->
+
+    <div class="categoria">
+
+        <button class="boton-categoria"
+                onclick="alternarMenu(this)">
+
+            <span class="titulo-categoria">
+
+                <span class="icono-categoria">🏋️</span>
+
+                ENTRENAMIENTO
+
+            </span>
+
+            <span class="flecha">▼</span>
+
+        </button>
+
+
+        <div class="contenido-categoria">
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='entrenamientos.html'">
+
+                🏋️ Entrenamientos
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='ejercicios.html'">
+
+                🏃 Ejercicios
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='volumen-entrenamiento.html'">
+
+                📊 Volumen de entrenamiento
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- SALUD Y BIENESTAR -->
+    <!-- ========================= -->
+
+    <div class="categoria">
+
+        <button class="boton-categoria"
+                onclick="alternarMenu(this)">
+
+            <span class="titulo-categoria">
+
+                <span class="icono-categoria">❤️</span>
+
+                SALUD Y BIENESTAR
+
+            </span>
+
+            <span class="flecha">▼</span>
+
+        </button>
+
+
+        <div class="contenido-categoria">
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='nutricion.html'">
+
+                🍎 Nutrición
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='patologias.html'">
+
+                🩺 Patologías
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='lesiones.html'">
+
+                🩹 Lesiones
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='factores-riesgo.html'">
+
+                ⚠️ Factores de riesgo
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- CLASES -->
+    <!-- ========================= -->
+
+    <div class="categoria">
+
+        <button class="boton-categoria"
+                onclick="alternarMenu(this)">
+
+            <span class="titulo-categoria">
+
+                <span class="icono-categoria">📅</span>
+
+                CLASES Y RESERVAS
+
+            </span>
+
+            <span class="flecha">▼</span>
+
+        </button>
+
+
+        <div class="contenido-categoria">
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='clases.html'">
+
+                📅 Clases
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- ENTRENADOR PERSONAL -->
+    <!-- ========================= -->
+
+    <div class="categoria">
+
+        <button class="boton-categoria"
+                onclick="alternarMenu(this)">
+
+            <span class="titulo-categoria">
+
+                <span class="icono-categoria">👨‍🏫</span>
+
+                ENTRENADOR PERSONAL
+
+            </span>
+
+            <span class="flecha">▼</span>
+
+        </button>
+
+
+        <div class="contenido-categoria">
+
+            <button class="boton-opcion"
+                    onclick="solicitarLlamada()">
+
+                📞 Llamada con entrenador
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="grabarEjercicio()">
+
+                🎥 Grabar ejercicio
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="enviarVideo()">
+
+                📤 Enviar video
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="verCorrecciones()">
+
+                💬 Mis correcciones
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="solicitarAsesoria()">
+
+                📅 Solicitar asesoría
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- ADMINISTRACIÓN -->
+    <!-- ========================= -->
+
+    <div class="categoria">
+
+        <button class="boton-categoria"
+                onclick="alternarMenu(this)">
+
+            <span class="titulo-categoria">
+
+                <span class="icono-categoria">💰</span>
+
+                ADMINISTRACIÓN
+
+            </span>
+
+            <span class="flecha">▼</span>
+
+        </button>
+
+
+        <div class="contenido-categoria">
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='finanzas.html'">
+
+                💰 Finanzas
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='equipos.html'">
+
+                🔧 Equipos y mantenimiento
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- REPORTES Y ANÁLISIS -->
+    <!-- ========================= -->
+
+    <div class="categoria">
+
+        <button class="boton-categoria"
+                onclick="alternarMenu(this)">
+
+            <span class="titulo-categoria">
+
+                <span class="icono-categoria">📊</span>
+
+                REPORTES Y ANÁLISIS
+
+            </span>
+
+            <span class="flecha">▼</span>
+
+        </button>
+
+
+        <div class="contenido-categoria">
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='estadisticas.html'">
+
+                📈 Estadísticas semanales
+
+            </button>
+
+
+            <button class="boton-opcion"
+                    onclick="window.location.href='reportes.html'">
+
+                📊 Reportes
+
+            </button>
+
+
+            <!-- ========================= -->
+            <!-- NUEVO: SATISFACCIÓN -->
+            <!-- ========================= -->
+
+            <button class="boton-opcion boton-satisfaccion"
+                    onclick="abrirSatisfaccion()">
+
+                😊 Satisfacción del usuario
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- VOLVER AL INICIO -->
+
+    <div style="text-align: center;">
+
+        <button class="volver"
+                onclick="window.location.href='index.html'">
+
+            ← VOLVER AL INICIO
+
+        </button>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+    /* ========================= */
+    /* MENÚ DESPLEGABLE */
+    /* ========================= */
+
+    function alternarMenu(boton) {
+
+        const contenido =
+            boton.nextElementSibling;
+
+        const flecha =
+            boton.querySelector(".flecha");
+
+
+        contenido.classList.toggle("activo");
+
+
+        if (contenido.classList.contains("activo")) {
+
+            flecha.textContent = "▲";
+
+        } else {
+
+            flecha.textContent = "▼";
+
+        }
+
+    }
+
+
+
+    /* ========================= */
+    /* SATISFACCIÓN */
+    /* ========================= */
+
+    function abrirSatisfaccion() {
+
+        window.location.href =
+            "satisfaccion/satisfaccion.html";
+
+    }
+
+
+
+    /* ========================= */
+    /* LLAMADA CON ENTRENADOR */
+    /* ========================= */
+
+    function solicitarLlamada() {
+
+        alert(
+            "📞 Solicitud de llamada con entrenador.\n\n" +
+            "Esta función quedará conectada al sistema de reservas."
+        );
+
+    }
+
+
+
+    /* ========================= */
+    /* GRABAR EJERCICIO */
+    /* ========================= */
+
+    function grabarEjercicio() {
+
+        alert(
+            "🎥 Aquí el usuario podrá grabar " +
+            "la ejecución de un ejercicio para que " +
+            "el entrenador pueda revisarlo."
+        );
+
+    }
+
+
+
+    /* ========================= */
+    /* ENVIAR VIDEO */
+    /* ========================= */
+
+    function enviarVideo() {
+
+        alert(
+            "📤 Aquí el usuario podrá enviar " +
+            "su video al entrenador."
+        );
+
+    }
+
+
+
+    /* ========================= */
+    /* CORRECCIONES */
+    /* ========================= */
+
+    function verCorrecciones() {
+
+        alert(
+            "💬 Aquí aparecerán las correcciones " +
+            "realizadas por el entrenador."
+        );
+
+    }
+
+
+
+    /* ========================= */
+    /* ASESORÍA */
+    /* ========================= */
+
+    function solicitarAsesoria() {
+
+        alert(
+            "📅 Aquí el usuario podrá solicitar " +
+            "una asesoría personalizada."
+        );
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

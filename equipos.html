@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <!-- ═══════════════════════════════════════════════════════
+         1. CONFIGURACIÓN DEL DOCUMENTO
+    ═══════════════════════════════════════════════════════ -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Equipos - DEXONEFIT</title>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         2. ESTILOS CSS
+    ═══════════════════════════════════════════════════════ -->
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .equipo {
+            border-left: 5px solid #ff6d00;
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .equipo h3 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .editar {
+            background: #00a86b;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .dato {
+            background: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .dato strong {
+            display: block;
+            font-size: 26px;
+            color: #00a86b;
+            margin-top: 8px;
+        }
+
+        .estado-disponible {
+            color: #00a86b;
+            font-weight: bold;
+        }
+
+        .estado-mantenimiento {
+            color: #ff6d00;
+            font-weight: bold;
+        }
+
+        .estado-fuera {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resumen {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         3. ENCABEZADO
+    ═══════════════════════════════════════════════════════ -->
+
+    <header>
+
+        <h1>DEXONEFIT</h1>
+
+        <p>Gestión y mantenimiento de equipos</p>
+
+        <button onclick="window.location.href='menu.html'">
+
+            ← VOLVER AL MENÚ
+
+        </button>
+
+    </header>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         4. CONTENEDOR PRINCIPAL
+    ═══════════════════════════════════════════════════════ -->
+
+    <div class="contenedor">
+
+
+        <!-- ═══════════════════════════════════════════════════
+             5. REGISTRAR EQUIPO
+        ═══════════════════════════════════════════════════ -->
+
+        <div class="tarjeta">
+
+            <h2>🔧 Registrar equipo</h2>
+
+
+            <div class="grid">
+
+
+                <!-- NOMBRE -->
+
+                <div>
+
+                    <label>
+                        Nombre del equipo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        placeholder="Ej: Prensa de piernas"
+                    >
+
+                </div>
+
+
+                <!-- CATEGORÍA -->
+
+                <div>
+
+                    <label>
+                        Categoría
+                    </label>
+
+                    <select id="categoria">
+
+                        <option value="">
+                            Seleccionar categoría
+                        </option>
+
+                        <option value="Cardio">
+                            Cardio
+                        </option>
+
+                        <option value="Fuerza">
+                            Fuerza
+                        </option>
+
+                        <option value="Peso libre">
+                            Peso libre
+                        </option>
+
+                        <option value="Funcional">
+                            Funcional
+                        </option>
+
+                        <option value="Accesorios">
+                            Accesorios
+                        </option>
+
+                        <option value="Otro">
+                            Otro
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- MARCA -->
+
+                <div>
+
+                    <label>
+                        Marca
+                    </label>
+
+                    <input
+                        type="text"
+                        id="marca"
+                        placeholder="Ej: Life Fitness"
+                    >
+
+                </div>
+
+
+                <!-- MODELO -->
+
+                <div>
+
+                    <label>
+                        Modelo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="modelo"
+                        placeholder="Modelo del equipo"
+                    >
+
+                </div>
+
+
+                <!-- NÚMERO DE SERIE -->
+
+                <div>
+
+                    <label>
+                        Número de serie
+                    </label>
+
+                    <input
+                        type="text"
+                        id="serie"
+                        placeholder="Número de serie"
+                    >
+
+                </div>
+
+
+                <!-- FECHA DE ADQUISICIÓN -->
+
+                <div>
+
+                    <label>
+                        Fecha de adquisición
+                    </label>
+
+                    <input
+                        type="date"
+                        id="adquisicion"
+                    >
+
+                </div>
+
+
+                <!-- ESTADO -->
+
+                <div>
+
+                    <label>
+                        Estado
+                    </label>
+
+                    <select id="estado">
+
+                        <option value="">
+                            Seleccionar estado
+                        </option>
+
+                        <option value="Disponible">
+                            Disponible
+                        </option>
+
+                        <option value="En mantenimiento">
+                            En mantenimiento
+                        </option>
+
+                        <option value="Fuera de servicio">
+                            Fuera de servicio
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ÚLTIMO MANTENIMIENTO -->
+
+                <div>
+
+                    <label>
+                        Último mantenimiento
+                    </label>
+
+                    <input
+                        type="date"
+                        id="ultimoMantenimiento"
+                    >
+
+                </div>
+
+
+                <!-- PRÓXIMO MANTENIMIENTO -->
+
+                <div>
+
+                    <label>
+                        Próximo mantenimiento
+                    </label>
+
+                    <input
+                        type="date"
+                        id="proximoMantenimiento"
+                    >
+
+                </div>
+
+
+                <!-- COSTO -->
+
+                <div>
+
+                    <label>
+                        Costo de mantenimiento
+                    </label>
+
+                    <input
+                        type="number"
+                        id="costo"
+                        min="0"
+                        placeholder="Ej: 250000"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <!-- OBSERVACIONES -->
+
+            <label>
+                Observaciones
+            </label>
+
+            <textarea
+                id="observaciones"
+                placeholder="Observaciones sobre el equipo..."
+            ></textarea>
+
+
+            <!-- GUARDAR -->
+
+            <button
+                class="boton"
+                onclick="guardarEquipo()">
+
+                + GUARDAR EQUIPO
+
+            </button>
+
+
+            <div
+                id="mensaje"
+                class="mensaje">
+            </div>
+
+        </div>
+
+
+        <!-- ═══════════════════════════════════════════════════
+             6. RESUMEN DE EQUIPOS
+        ═══════════════════════════════════════════════════ -->
+
+        <div class="tarjeta">
+
+            <h2>📊 Estado de equipos</h2>
+
+
+            <div class="resumen">
+
+
+                <div class="dato">
+
+                    Total
+
+                    <strong id="total">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="dato">
+
+                    Disponibles
+
+                    <strong id="disponibles">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="dato">
+
+                    Mantenimiento
+
+                    <strong id="mantenimiento">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="dato">
+
+                    Fuera de servicio
+
+                    <strong id="fueraServicio">
+                        0
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ═══════════════════════════════════════════════════
+             7. LISTADO DE EQUIPOS
+        ═══════════════════════════════════════════════════ -->
+
+        <div class="tarjeta">
+
+            <h2>📋 Equipos registrados</h2>
+
+            <div id="listaEquipos"></div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         8. JAVASCRIPT
+    ═══════════════════════════════════════════════════════ -->
+
+    <script>
+
+
+        // ═══════════════════════════════════════════════════════
+        // 8.1 VARIABLES Y LOCALSTORAGE
+        // ═══════════════════════════════════════════════════════
+
+        let equipos = JSON.parse(
+            localStorage.getItem("equiposDexoneFit")
+        ) || [];
+
+
+        // ═══════════════════════════════════════════════════════
+        // 8.2 GUARDAR EQUIPO
+        // ═══════════════════════════════════════════════════════
+
+        function guardarEquipo() {
+
+
+            const nombre =
+                document.getElementById("nombre").value.trim();
+
+
+            const categoria =
+                document.getElementById("categoria").value;
+
+
+            const marca =
+                document.getElementById("marca").value.trim();
+
+
+            const modelo =
+                document.getElementById("modelo").value.trim();
+
+
+            const serie =
+                document.getElementById("serie").value.trim();
+
+
+            const adquisicion =
+                document.getElementById("adquisicion").value;
+
+
+            const estado =
+                document.getElementById("estado").value;
+
+
+            const ultimoMantenimiento =
+                document.getElementById(
+                    "ultimoMantenimiento"
+                ).value;
+
+
+            const proximoMantenimiento =
+                document.getElementById(
+                    "proximoMantenimiento"
+                ).value;
+
+
+            const costo =
+                Number(
+                    document.getElementById("costo").value
+                ) || 0;
+
+
+            const observaciones =
+                document.getElementById(
+                    "observaciones"
+                ).value.trim();
+
+
+            if (
+                !nombre ||
+                !categoria ||
+                !estado
+            ) {
+
+                document.getElementById(
+                    "mensaje"
+                ).textContent =
+                    "⚠️ Completa nombre, categoría y estado.";
+
+                return;
+
+            }
+
+
+            const nuevoEquipo = {
+
+                id: Date.now(),
+
+                nombre: nombre,
+
+                categoria: categoria,
+
+                marca: marca,
+
+                modelo: modelo,
+
+                serie: serie,
+
+                adquisicion: adquisicion,
+
+                estado: estado,
+
+                ultimoMantenimiento:
+                    ultimoMantenimiento,
+
+                proximoMantenimiento:
+                    proximoMantenimiento,
+
+                costo: costo,
+
+                observaciones:
+                    observaciones
+
+            };
+
+
+            equipos.push(nuevoEquipo);
+
+
+            localStorage.setItem(
+                "equiposDexoneFit",
+                JSON.stringify(equipos)
+            );
+
+
+            limpiarFormulario();
+
+
+            document.getElementById(
+                "mensaje"
+            ).textContent =
+                "✅ Equipo registrado correctamente.";
+
+
+            mostrarEquipos();
+
+            actualizarResumen();
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 8.3 LIMPIAR FORMULARIO
+        // ═══════════════════════════════════════════════════════
+
+        function limpiarFormulario() {
+
+            document.getElementById("nombre").value = "";
+
+            document.getElementById("categoria").value = "";
+
+            document.getElementById("marca").value = "";
+
+            document.getElementById("modelo").value = "";
+
+            document.getElementById("serie").value = "";
+
+            document.getElementById("adquisicion").value = "";
+
+            document.getElementById("estado").value = "";
+
+            document.getElementById(
+                "ultimoMantenimiento"
+            ).value = "";
+
+            document.getElementById(
+                "proximoMantenimiento"
+            ).value = "";
+
+            document.getElementById("costo").value = "";
+
+            document.getElementById(
+                "observaciones"
+            ).value = "";
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 8.4 MOSTRAR EQUIPOS
+        // ═══════════════════════════════════════════════════════
+
+        function mostrarEquipos() {
+
+            const lista =
+                document.getElementById(
+                    "listaEquipos"
+                );
+
+
+            lista.innerHTML = "";
+
+
+            if (equipos.length === 0) {
+
+                lista.innerHTML =
+                    "<p>No hay equipos registrados.</p>";
+
+                return;
+
+            }
+
+
+            equipos.forEach(
+                function(equipo, indice) {
+
+
+                    let claseEstado =
+                        "estado-disponible";
+
+
+                    if (
+                        equipo.estado ===
+                        "En mantenimiento"
+                    ) {
+
+                        claseEstado =
+                            "estado-mantenimiento";
+
+                    }
+
+
+                    if (
+                        equipo.estado ===
+                        "Fuera de servicio"
+                    ) {
+
+                        claseEstado =
+                            "estado-fuera";
+
+                    }
+
+
+                    const tarjeta =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    tarjeta.className =
+                        "equipo";
+
+
+                    tarjeta.innerHTML = `
+
+                        <h3>
+                            🔧 ${equipo.nombre}
+                        </h3>
+
+                        <p>
+                            <strong>Categoría:</strong>
+                            ${equipo.categoria}
+                        </p>
+
+                        <p>
+                            <strong>Marca:</strong>
+                            ${equipo.marca || "-"}
+                        </p>
+
+                        <p>
+                            <strong>Modelo:</strong>
+                            ${equipo.modelo || "-"}
+                        </p>
+
+                        <p>
+                            <strong>Número de serie:</strong>
+                            ${equipo.serie || "-"}
+                        </p>
+
+                        <p>
+                            <strong>Adquisición:</strong>
+                            ${equipo.adquisicion || "-"}
+                        </p>
+
+                        <p>
+                            <strong>Estado:</strong>
+
+                            <span class="${claseEstado}">
+                                ${equipo.estado}
+                            </span>
+
+                        </p>
+
+                        <p>
+                            <strong>Último mantenimiento:</strong>
+                            ${equipo.ultimoMantenimiento || "-"}
+                        </p>
+
+                        <p>
+                            <strong>Próximo mantenimiento:</strong>
+                            ${equipo.proximoMantenimiento || "-"}
+                        </p>
+
+                        <p>
+                            <strong>Costo:</strong>
+                            $${Number(
+                                equipo.costo || 0
+                            ).toLocaleString("es-CO")}
+                        </p>
+
+                        <p>
+                            <strong>Observaciones:</strong>
+                            ${equipo.observaciones || "-"}
+                        </p>
+
+                        <button
+                            class="eliminar"
+                            onclick="eliminarEquipo(${indice})">
+
+                            🗑️ Eliminar
+
+                        </button>
+
+                    `;
+
+
+                    lista.appendChild(tarjeta);
+
+                }
+            );
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 8.5 ACTUALIZAR RESUMEN
+        // ═══════════════════════════════════════════════════════
+
+        function actualizarResumen() {
+
+
+            const total =
+                equipos.length;
+
+
+            const disponibles =
+                equipos.filter(
+                    function(equipo) {
+
+                        return equipo.estado ===
+                            "Disponible";
+
+                    }
+                ).length;
+
+
+            const mantenimiento =
+                equipos.filter(
+                    function(equipo) {
+
+                        return equipo.estado ===
+                            "En mantenimiento";
+
+                    }
+                ).length;
+
+
+            const fueraServicio =
+                equipos.filter(
+                    function(equipo) {
+
+                        return equipo.estado ===
+                            "Fuera de servicio";
+
+                    }
+                ).length;
+
+
+            document.getElementById(
+                "total"
+            ).textContent =
+                total;
+
+
+            document.getElementById(
+                "disponibles"
+            ).textContent =
+                disponibles;
+
+
+            document.getElementById(
+                "mantenimiento"
+            ).textContent =
+                mantenimiento;
+
+
+            document.getElementById(
+                "fueraServicio"
+            ).textContent =
+                fueraServicio;
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 8.6 ELIMINAR EQUIPO
+        // ═══════════════════════════════════════════════════════
+
+        function eliminarEquipo(indice) {
+
+
+            const confirmar =
+                confirm(
+                    "¿Deseas eliminar este equipo?"
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            equipos.splice(
+                indice,
+                1
+            );
+
+
+            localStorage.setItem(
+                "equiposDexoneFit",
+                JSON.stringify(equipos)
+            );
+
+
+            mostrarEquipos();
+
+            actualizarResumen();
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 8.7 INICIALIZAR PÁGINA
+        // ═══════════════════════════════════════════════════════
+
+        mostrarEquipos();
+
+        actualizarResumen();
+
+
+    </script>
+
+
+</body>
+
+</html>

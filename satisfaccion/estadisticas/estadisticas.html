@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Estadísticas - DEXONEFIT</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            color: #333;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        header p {
+            margin: 7px 0 0;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .tarjeta h2 {
+            margin-top: 0;
+            color: #00a86b;
+        }
+
+        /* FILTROS */
+
+        .filtros {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .campo label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            border: none;
+            padding: 13px 18px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-filtrar {
+            background: #00a86b;
+            color: white;
+        }
+
+        .btn-todo {
+            background: #777;
+            color: white;
+        }
+
+        /* INDICADORES */
+
+        .indicadores {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .indicador {
+            background: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .numero {
+            font-size: 30px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        .indicador p {
+            margin-bottom: 0;
+        }
+
+        /* SEMÁFORO */
+
+        .semaforo {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .circulo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+        }
+
+        .excelente {
+            background: #d9f7e8;
+        }
+
+        .aceptable {
+            background: #fff3cd;
+        }
+
+        .baja {
+            background: #f8d7da;
+        }
+
+        #estadoTexto {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* BARRAS */
+
+        .fila {
+            margin-bottom: 18px;
+        }
+
+        .fila-info {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .barra {
+            width: 100%;
+            height: 28px;
+            background: #e5e5e5;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progreso {
+            height: 100%;
+            width: 0%;
+            background: #00a86b;
+            border-radius: 20px;
+            transition: width 0.7s;
+        }
+
+        /* ÁREAS */
+
+        .areas {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .area {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .area h3 {
+            margin-top: 0;
+            color: #00a86b;
+        }
+
+        .area-numero {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .barra-area {
+            height: 15px;
+            background: #e5e5e5;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .area-progreso {
+            height: 100%;
+            width: 0%;
+            background: #ff6d00;
+            border-radius: 20px;
+        }
+
+        /* COMENTARIOS */
+
+        .comentario {
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .comentario strong {
+            color: #00a86b;
+        }
+
+        .sin-datos {
+            text-align: center;
+            padding: 25px;
+            color: #777;
+        }
+
+        /* BOTONES */
+
+        .botones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nueva {
+            background: #00a86b;
+            color: white;
+        }
+
+        .btn-historial {
+            background: #ff6d00;
+            color: white;
+        }
+
+        .btn-inicio {
+            background: #777;
+            color: white;
+        }
+
+        @media (max-width: 800px) {
+
+            .indicadores {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filtros {
+                grid-template-columns: 1fr;
+            }
+
+            .areas {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .indicadores {
+                grid-template-columns: 1fr;
+            }
+
+            .contenedor {
+                padding: 12px;
+            }
+
+            .tarjeta {
+                padding: 18px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>
+        Estadísticas de satisfacción de usuarios
+    </p>
+
+</header>
+
+
+<div class="contenedor">
+
+
+    <!-- FILTROS -->
+
+    <div class="tarjeta">
+
+        <h2>📅 Filtrar período</h2>
+
+        <div class="filtros">
+
+            <div class="campo">
+
+                <label>Desde</label>
+
+                <input
+                    type="date"
+                    id="fechaDesde">
+
+            </div>
+
+
+            <div class="campo">
+
+                <label>Hasta</label>
+
+                <input
+                    type="date"
+                    id="fechaHasta">
+
+            </div>
+
+
+            <button
+                class="btn-filtrar"
+                onclick="filtrarFecha()">
+
+                🔎 Filtrar
+
+            </button>
+
+
+            <button
+                class="btn-todo"
+                onclick="mostrarTodo()">
+
+                🔄 Mostrar todo
+
+            </button>
+
+        </div>
+
+        <p id="periodo">
+            Mostrando todas las encuestas.
+        </p>
+
+    </div>
+
+
+    <!-- RESUMEN -->
+
+    <div class="tarjeta">
+
+        <h2>📊 Resumen general</h2>
+
+        <div class="indicadores">
+
+            <div class="indicador">
+
+                <div
+                    id="total"
+                    class="numero">
+                    0
+                </div>
+
+                <p>Total encuestas</p>
+
+            </div>
+
+
+            <div class="indicador">
+
+                <div
+                    id="promedio"
+                    class="numero">
+                    0 ★
+                </div>
+
+                <p>Promedio general</p>
+
+            </div>
+
+
+            <div class="indicador">
+
+                <div
+                    id="satisfaccion"
+                    class="numero">
+                    0%
+                </div>
+
+                <p>Satisfacción</p>
+
+            </div>
+
+
+            <div class="indicador">
+
+                <div
+                    id="usuarios"
+                    class="numero">
+                    0
+                </div>
+
+                <p>Usuarios evaluados</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEMÁFORO -->
+
+    <div class="tarjeta semaforo">
+
+        <h2>🚦 Nivel de satisfacción</h2>
+
+        <div
+            id="circulo"
+            class="circulo">
+
+            😊
+
+        </div>
+
+        <div id="estadoTexto">
+            Sin datos
+        </div>
+
+        <p id="estadoDescripcion">
+            Registra una encuesta para conocer el nivel.
+        </p>
+
+    </div>
+
+
+    <!-- DISTRIBUCIÓN -->
+
+    <div class="tarjeta">
+
+        <h2>⭐ Distribución de calificaciones</h2>
+
+        <div id="grafico">
+
+            <div class="fila">
+
+                <div class="fila-info">
+
+                    <span>⭐⭐⭐⭐⭐ 5 estrellas</span>
+
+                    <span id="cantidad5">0</span>
+
+                </div>
+
+                <div class="barra">
+
+                    <div
+                        id="barra5"
+                        class="progreso">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="fila">
+
+                <div class="fila-info">
+
+                    <span>⭐⭐⭐⭐ 4 estrellas</span>
+
+                    <span id="cantidad4">0</span>
+
+                </div>
+
+                <div class="barra">
+
+                    <div
+                        id="barra4"
+                        class="progreso">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="fila">
+
+                <div class="fila-info">
+
+                    <span>⭐⭐⭐ 3 estrellas</span>
+
+                    <span id="cantidad3">0</span>
+
+                </div>
+
+                <div class="barra">
+
+                    <div
+                        id="barra3"
+                        class="progreso">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="fila">
+
+                <div class="fila-info">
+
+                    <span>⭐⭐ 2 estrellas</span>
+
+                    <span id="cantidad2">0</span>
+
+                </div>
+
+                <div class="barra">
+
+                    <div
+                        id="barra2"
+                        class="progreso">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="fila">
+
+                <div class="fila-info">
+
+                    <span>⭐ 1 estrella</span>
+
+                    <span id="cantidad1">0</span>
+
+                </div>
+
+                <div class="barra">
+
+                    <div
+                        id="barra1"
+                        class="progreso">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ÁREAS -->
+
+    <div class="tarjeta">
+
+        <h2>📈 Satisfacción por área</h2>
+
+        <div class="areas">
+
+            <div class="area">
+
+                <h3>👨‍🏫 Entrenador</h3>
+
+                <div
+                    id="entrenador"
+                    class="area-numero">
+                    0%
+                </div>
+
+                <div class="barra-area">
+
+                    <div
+                        id="barraEntrenador"
+                        class="area-progreso">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="area">
+
+                <h3>🏋️ Entrenamientos</h3>
+
+                <div
+                    id="entrenamiento"
+                    class="area-numero">
+                    0%
+                </div>
+
+                <div class="barra-area">
+
+                    <div
+                        id="barraEntrenamiento"
+                        class="area-progreso">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="area">
+
+                <h3>🏢 Instalaciones</h3>
+
+                <div
+                    id="instalaciones"
+                    class="area-numero">
+                    0%
+                </div>
+
+                <div class="barra-area">
+
+                    <div
+                        id="barraInstalaciones"
+                        class="area-progreso">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="area">
+
+                <h3>📚 Clases</h3>
+
+                <div
+                    id="clases"
+                    class="area-numero">
+                    0%
+                </div>
+
+                <div class="barra-area">
+
+                    <div
+                        id="barraClases"
+                        class="area-progreso">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMENTARIOS -->
+
+    <div class="tarjeta">
+
+        <h2>💬 Últimos comentarios</h2>
+
+        <div id="comentarios">
+
+            <div class="sin-datos">
+                No hay comentarios registrados.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTONES -->
+
+    <div class="tarjeta">
+
+        <div class="botones">
+
+            <button
+                class="btn-nueva"
+                onclick="nuevaEncuesta()">
+
+                😊 Nueva encuesta
+
+            </button>
+
+
+            <button
+                class="btn-historial"
+                onclick="abrirHistorial()">
+
+                📋 Ver historial
+
+            </button>
+
+
+            <button
+                class="btn-inicio"
+                onclick="volverInicio()">
+
+                🏠 Volver al inicio
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ===============================
+   OBTENER ENCUESTAS
+================================ */
+
+function obtenerEncuestas() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "satisfaccionesDexoneFit"
+        )
+    ) || [];
+
+}
+
+
+/* ===============================
+   ENCUESTAS ACTUALES
+================================ */
+
+let encuestasActuales =
+    obtenerEncuestas();
+
+
+/* ===============================
+   FECHA
+================================ */
+
+function obtenerFecha(encuesta) {
+
+    if (!encuesta.fecha) {
+        return null;
+    }
+
+    let fecha =
+        new Date(encuesta.fecha);
+
+    if (!isNaN(fecha.getTime())) {
+        return fecha;
+    }
+
+    return null;
+
+}
+
+
+/* ===============================
+   FILTRAR
+================================ */
+
+function filtrarFecha() {
+
+    const desde =
+        document.getElementById(
+            "fechaDesde"
+        ).value;
+
+    const hasta =
+        document.getElementById(
+            "fechaHasta"
+        ).value;
+
+
+    if (!desde && !hasta) {
+
+        alert(
+            "Selecciona al menos una fecha."
+        );
+
+        return;
+    }
+
+
+    encuestasActuales =
+        obtenerEncuestas().filter(
+            function(encuesta) {
+
+                const fecha =
+                    obtenerFecha(
+                        encuesta
+                    );
+
+                if (!fecha) {
+                    return false;
+                }
+
+
+                const fechaTexto =
+                    fecha.toISOString()
+                        .split("T")[0];
+
+
+                if (
+                    desde &&
+                    fechaTexto < desde
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    hasta &&
+                    fechaTexto > hasta
+                ) {
+                    return false;
+                }
+
+
+                return true;
+
+            }
+        );
+
+
+    document.getElementById(
+        "periodo"
+    ).textContent =
+        "Mostrando "
+        + encuestasActuales.length
+        + " encuesta(s) seleccionada(s).";
+
+
+    mostrarEstadisticas(
+        encuestasActuales
+    );
+
+}
+
+
+/* ===============================
+   MOSTRAR TODO
+================================ */
+
+function mostrarTodo() {
+
+    encuestasActuales =
+        obtenerEncuestas();
+
+
+    document.getElementById(
+        "fechaDesde"
+    ).value = "";
+
+
+    document.getElementById(
+        "fechaHasta"
+    ).value = "";
+
+
+    document.getElementById(
+        "periodo"
+    ).textContent =
+        "Mostrando todas las encuestas.";
+
+
+    mostrarEstadisticas(
+        encuestasActuales
+    );
+
+}
+
+
+/* ===============================
+   CONVERTIR TEXTO
+================================ */
+
+function convertirPuntuacion(valor) {
+
+    const valores = {
+
+        "Excelente": 5,
+        "Muy bueno": 4,
+        "Bueno": 3,
+        "Regular": 2,
+        "Malo": 1
+
+    };
+
+    return valores[valor] || 0;
+
+}
+
+
+/* ===============================
+   ÁREA
+================================ */
+
+function calcularArea(
+    encuestas,
+    campo
+) {
+
+    let suma = 0;
+    let cantidad = 0;
+
+
+    encuestas.forEach(
+        function(encuesta) {
+
+            const valor =
+                convertirPuntuacion(
+                    encuesta[campo]
+                );
+
+
+            if (valor > 0) {
+
+                suma += valor;
+                cantidad++;
+
+            }
+
+        }
+    );
+
+
+    if (cantidad === 0) {
+        return 0;
+    }
+
+
+    return (
+        suma / cantidad
+    ) / 5 * 100;
+
+}
+
+
+/* ===============================
+   MOSTRAR ÁREA
+================================ */
+
+function mostrarArea(
+    valor,
+    texto,
+    barra
+) {
+
+    document.getElementById(
+        texto
+    ).textContent =
+        valor.toFixed(0) + "%";
+
+
+    document.getElementById(
+        barra
+    ).style.width =
+        valor + "%";
+
+}
+
+
+/* ===============================
+   ESTADÍSTICAS
+================================ */
+
+function mostrarEstadisticas(
+    encuestas
+) {
+
+    const total =
+        encuestas.length;
+
+
+    document.getElementById(
+        "total"
+    ).textContent =
+        total;
+
+
+    if (total === 0) {
+
+        document.getElementById(
+            "promedio"
+        ).textContent =
+            "0 ★";
+
+
+        document.getElementById(
+            "satisfaccion"
+        ).textContent =
+            "0%";
+
+
+        document.getElementById(
+            "usuarios"
+        ).textContent =
+            "0";
+
+
+        actualizarSemaforo(0);
+
+
+        return;
+
+    }
+
+
+    let suma = 0;
+
+    let estrellas = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0
+    };
+
+
+    let usuarios =
+        new Set();
+
+
+    encuestas.forEach(
+        function(encuesta) {
+
+            const calificacion =
+                Number(
+                    encuesta.calificacion
+                );
+
+
+            suma += calificacion;
+
+
+            if (
+                estrellas[
+                    calificacion
+                ] !== undefined
+            ) {
+
+                estrellas[
+                    calificacion
+                ]++;
+
+            }
+
+
+            if (encuesta.usuario) {
+
+                usuarios.add(
+                    encuesta.usuario
+                );
+
+            }
+
+        }
+    );
+
+
+    const promedio =
+        suma / total;
+
+
+    const porcentaje =
+        (promedio / 5) * 100;
+
+
+    document.getElementById(
+        "promedio"
+    ).textContent =
+        promedio.toFixed(1)
+        + " ★";
+
+
+    document.getElementById(
+        "satisfaccion"
+    ).textContent =
+        porcentaje.toFixed(0)
+        + "%";
+
+
+    document.getElementById(
+        "usuarios"
+    ).textContent =
+        usuarios.size;
+
+
+    actualizarSemaforo(
+        porcentaje
+    );
+
+
+    for (
+        let i = 1;
+        i <= 5;
+        i++
+    ) {
+
+        document.getElementById(
+            "cantidad" + i
+        ).textContent =
+            estrellas[i];
+
+
+        document.getElementById(
+            "barra" + i
+        ).style.width =
+            (
+                estrellas[i]
+                / total
+                * 100
+            ) + "%";
+
+    }
+
+
+    mostrarArea(
+        calcularArea(
+            encuestas,
+            "entrenador"
+        ),
+        "entrenador",
+        "barraEntrenador"
+    );
+
+
+    mostrarArea(
+        calcularArea(
+            encuestas,
+            "entrenamiento"
+        ),
+        "entrenamiento",
+        "barraEntrenamiento"
+    );
+
+
+    mostrarArea(
+        calcularArea(
+            encuestas,
+            "instalaciones"
+        ),
+        "instalaciones",
+        "barraInstalaciones"
+    );
+
+
+    mostrarArea(
+        calcularArea(
+            encuestas,
+            "clases"
+        ),
+        "clases",
+        "barraClases"
+    );
+
+
+    mostrarComentarios(
+        encuestas
+    );
+
+}
+
+
+/* ===============================
+   SEMÁFORO
+================================ */
+
+function actualizarSemaforo(
+    porcentaje
+) {
+
+    const circulo =
+        document.getElementById(
+            "circulo"
+        );
+
+
+    const texto =
+        document.getElementById(
+            "estadoTexto"
+        );
+
+
+    const descripcion =
+        document.getElementById(
+            "estadoDescripcion"
+        );
+
+
+    circulo.className =
+        "circulo";
+
+
+    if (porcentaje >= 80) {
+
+        circulo.classList.add(
+            "excelente"
+        );
+
+        circulo.textContent =
+            "😊";
+
+        texto.textContent =
+            "🟢 EXCELENTE";
+
+
+        descripcion.textContent =
+            "Los usuarios presentan un alto nivel de satisfacción.";
+
+    }
+
+    else if (porcentaje >= 60) {
+
+        circulo.classList.add(
+            "aceptable"
+        );
+
+        circulo.textContent =
+            "😐";
+
+        texto.textContent =
+            "🟡 ACEPTABLE";
+
+
+        descripcion.textContent =
+            "La satisfacción es aceptable, pero existen aspectos por mejorar.";
+
+    }
+
+    else {
+
+        circulo.classList.add(
+            "baja"
+        );
+
+        circulo.textContent =
+            "😟";
+
+        texto.textContent =
+            "🔴 BAJA";
+
+
+        descripcion.textContent =
+            "Se recomienda analizar los comentarios y tomar acciones de mejora.";
+
+    }
+
+}
+
+
+/* ===============================
+   COMENTARIOS
+================================ */
+
+function mostrarComentarios(
+    encuestas
+) {
+
+    const contenedor =
+        document.getElementById(
+            "comentarios"
+        );
+
+
+    const conComentarios =
+        encuestas
+            .filter(
+                function(encuesta) {
+
+                    return encuesta.comentario
+                        &&
+                        encuesta.comentario.trim()
+                        !== "";
+
+                }
+            )
+            .slice(-5)
+            .reverse();
+
+
+    if (
+        conComentarios.length === 0
+    ) {
+
+        contenedor.innerHTML =
+            '<div class="sin-datos">' +
+            'No hay comentarios registrados.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML = "";
+
+
+    conComentarios.forEach(
+        function(encuesta) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "comentario";
+
+
+            div.innerHTML =
+                "<strong>" +
+                encuesta.usuario +
+                "</strong>" +
+                " — ⭐ " +
+                encuesta.calificacion +
+                "<br><br>" +
+                encuesta.comentario;
+
+
+            contenedor.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* ===============================
+   NAVEGACIÓN
+================================ */
+
+function nuevaEncuesta() {
+
+    window.location.href =
+        "../satisfaccion.html";
+
+}
+
+
+function abrirHistorial() {
+
+    window.location.href =
+        "../historial/historial.html";
+
+}
+
+
+function volverInicio() {
+
+    window.location.href =
+        "../../Menú.html";
+
+}
+
+
+/* ===============================
+   INICIAR
+================================ */
+
+mostrarEstadisticas(
+    encuestasActuales
+);
+
+</script>
+
+</body>
+
+</html>
