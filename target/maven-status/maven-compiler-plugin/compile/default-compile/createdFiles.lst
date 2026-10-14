@@ -1,12 +1,14 @@
 controlador\EvaluacionesMicrobiotaServlet.class
 com\mycompany\calculos_composicion\resources\JakartaEE8Resource.class
 com\mycompany\calculos_composicion\JakartaRestConfiguration.class
+com\mycompany\calculos_composicion\resources\UsuarioResource.class
 controlador\CalculosComposicionServlet.class
 controlador\EvaluacionClinicaServlet.class
 modelo\TestConexion.class
 controlador\MedicionesServlet.class
 com\dexonefit\ia\MetaAsistente.class
 controlador\EntrenamientosServlet.class
+controlador\LogoutServlet.class
 controlador\UsuarioServlet.class
 modelo\conexion.class
 controlador\VolumenEntrenamientoServlet.class
@@ -15,4 +17,7 @@ controlador\CalculosNutricionalesServlet.class
 controlador\ComunicadosServlet.class
 com\dexonefit\ia\GuardarEvaluacionClinica.class
 controlador\PromocionesServlet.class
+controlador\UsuarioDAO.class
 controlador\EjerciciosServlet.class
+modelo\Usuario.class
+controlador\LoginServlet.class

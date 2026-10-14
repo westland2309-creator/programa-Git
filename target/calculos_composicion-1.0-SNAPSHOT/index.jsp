@@ -1,3 +1,12 @@
+<%@page import="modelo.Usuario"%>
+<%
+    HttpSession misesion = request.getSession(false);
+    if (misesion == null || misesion.getAttribute("usuarioLogueado") == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+    Usuario userActivo = (Usuario) misesion.getAttribute("usuarioLogueado");
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -95,6 +104,25 @@
             transform: translateX(4px);
         }
 
+        /* BOTÓN DE CERRAR SESIÓN */
+        .btn-logout {
+            display: block;
+            width: 100%;
+            background-color: #dc3545;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
+        .btn-logout:hover {
+            background-color: #bb2d3b;
+        }
+
         /* CONTENIDO PRINCIPAL ALINEADO ARRIBA */
         .main-content {
             flex: 1;
@@ -130,14 +158,25 @@
             line-height: 1.4;
             margin-bottom: 15px;
         }
+        
+        .user-info-badge {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
 
         /* CONTENEDOR DE VIDEO GIGANTE Y VERTICAL */
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 440px; /* Ancho ampliado */
+            max-width: 440px;
             margin: 0 auto;
-            height: 640px; /* Altura imponente para ocupar toda la vista vertical */
+            height: 640px;
             background: #000;
             border-radius: 10px;
             overflow: hidden;
@@ -227,8 +266,13 @@
 
         </div>
         
-        <div style="font-size: 11px; color: #9ca3af; text-align: center; margin-top: 20px;">
-            SENA / DEXONEFIT © 2026
+        <div>
+            <!-- BOTÓN DE CERRAR SESIÓN -->
+            <a href="LoginServlet?accion=cerrar" class="btn-logout">🚪 Cerrar Sesión</a>
+            
+            <div style="font-size: 11px; color: #9ca3af; text-align: center;">
+                SENA / DEXONEFIT ©️ 2026
+            </div>
         </div>
     </div>
 
@@ -236,6 +280,9 @@
     <div class="main-content">
         <div class="bienvenida-card">
             <h2>Panel de Control <span>DEXONEFIT</span></h2>
+            <div class="user-info-badge">
+                👤 Bienvenido, <%= userActivo.getNombre() %> (<%= userActivo.getRol() %>)
+            </div>
             <p>Sistema integral de gestión para el entrenamiento personalizado, la biomecánica clínica y la nutrición basada en evidencia.</p>
 
             <div class="video-container">
