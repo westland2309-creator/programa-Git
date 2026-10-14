@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Usuarios - DexoneFit</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        header button:hover {
+            background: #e65100;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #00a86b;
+            color: white;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .eliminar:hover {
+            background: #b71c1c;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>DEXONE FIT</h1>
+
+        <p>Gestión de usuarios</p>
+
+        <button onclick="window.location.href='menu.html'">
+            ← VOLVER AL MENÚ
+        </button>
+
+    </header>
+
+
+    <div class="contenedor">
+
+
+        <!-- FORMULARIO -->
+
+        <div class="tarjeta">
+
+            <h2>Registrar nuevo usuario</h2>
+
+
+            <label>Nombre completo</label>
+
+            <input
+                type="text"
+                id="nombre"
+                placeholder="Ej: Juan Pérez"
+            >
+
+
+            <label>Correo electrónico</label>
+
+            <input
+                type="email"
+                id="correo"
+                placeholder="Ej: juan@gmail.com"
+            >
+
+
+            <label>Teléfono</label>
+
+            <input
+                type="tel"
+                id="telefono"
+                placeholder="Ej: 3001234567"
+            >
+
+
+            <label>Tipo de usuario</label>
+
+            <select id="tipo">
+
+                <option value="">Seleccionar</option>
+
+                <option value="Cliente">
+                    Cliente
+                </option>
+
+                <option value="Entrenador">
+                    Entrenador
+                </option>
+
+                <option value="Administrador">
+                    Administrador
+                </option>
+
+            </select>
+
+
+            <button class="boton" onclick="agregarUsuario()">
+                + AGREGAR USUARIO
+            </button>
+
+
+            <div id="mensaje" class="mensaje"></div>
+
+        </div>
+
+
+        <!-- TABLA -->
+
+        <div class="tarjeta">
+
+            <h2>Usuarios registrados</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Nombre</th>
+
+                        <th>Correo</th>
+
+                        <th>Teléfono</th>
+
+                        <th>Tipo</th>
+
+                        <th>Acción</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="tablaUsuarios">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // Obtener usuarios guardados
+        let usuarios = JSON.parse(
+            localStorage.getItem("usuariosDexoneFit")
+        ) || [];
+
+
+        // Mostrar usuarios
+        function mostrarUsuarios() {
+
+            const tabla = document.getElementById("tablaUsuarios");
+
+            tabla.innerHTML = "";
+
+
+            usuarios.forEach(function(usuario, indice) {
+
+                const fila = document.createElement("tr");
+
+
+                fila.innerHTML = `
+
+                    <td>${usuario.nombre}</td>
+
+                    <td>${usuario.correo}</td>
+
+                    <td>${usuario.telefono}</td>
+
+                    <td>${usuario.tipo}</td>
+
+                    <td>
+                        <button
+                            class="eliminar"
+                            onclick="eliminarUsuario(${indice})">
+                            Eliminar
+                        </button>
+                    </td>
+
+                `;
+
+
+                tabla.appendChild(fila);
+
+            });
+
+        }
+
+
+        // Agregar usuario
+        function agregarUsuario() {
+
+            const nombre =
+                document.getElementById("nombre").value.trim();
+
+            const correo =
+                document.getElementById("correo").value.trim();
+
+            const telefono =
+                document.getElementById("telefono").value.trim();
+
+            const tipo =
+                document.getElementById("tipo").value;
+
+
+            // Validar campos
+            if (!nombre || !correo || !telefono || !tipo) {
+
+                document.getElementById("mensaje").textContent =
+                    "⚠️ Completa todos los campos.";
+
+                return;
+            }
+
+
+            // Crear usuario
+            const nuevoUsuario = {
+
+                nombre: nombre,
+
+                correo: correo,
+
+                telefono: telefono,
+
+                tipo: tipo
+
+            };
+
+
+            // Guardar
+            usuarios.push(nuevoUsuario);
+
+
+            localStorage.setItem(
+                "usuariosDexoneFit",
+                JSON.stringify(usuarios)
+            );
+
+
+            // Limpiar formulario
+            document.getElementById("nombre").value = "";
+
+            document.getElementById("correo").value = "";
+
+            document.getElementById("telefono").value = "";
+
+            document.getElementById("tipo").value = "";
+
+
+            // Mensaje
+            document.getElementById("mensaje").textContent =
+                "✅ Usuario registrado correctamente.";
+
+
+            // Actualizar tabla
+            mostrarUsuarios();
+
+        }
+
+
+        // Eliminar usuario
+        function eliminarUsuario(indice) {
+
+            usuarios.splice(indice, 1);
+
+
+            localStorage.setItem(
+                "usuariosDexoneFit",
+                JSON.stringify(usuarios)
+            );
+
+
+            mostrarUsuarios();
+
+        }
+
+
+        // Mostrar usuarios al abrir la página
+        mostrarUsuarios();
+
+    </script>
+
+</body>
+
+</html>

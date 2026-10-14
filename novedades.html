@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Novedades - DEXONEFIT</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            margin: 8px 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        header button:hover {
+            background: #e65100;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .novedad {
+            padding: 20px;
+            border-radius: 12px;
+            background: #f8f8f8;
+            border-left: 5px solid #ff6d00;
+            margin-top: 15px;
+        }
+
+        .novedad h3 {
+            margin-top: 0;
+            color: #00a86b;
+        }
+
+        .vencimiento {
+            border-left-color: #ff6d00;
+        }
+
+        .vencida {
+            border-left-color: #d32f2f;
+        }
+
+        .promocion {
+            border-left-color: #00a86b;
+        }
+
+        .comunicado {
+            border-left-color: #1976d2;
+        }
+
+        .top {
+            border-left-color: #f9a825;
+        }
+
+        .formulario {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .campo-completo {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .boton {
+            margin-top: 15px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .eliminar:hover {
+            background: #b71c1c;
+        }
+
+        .vacio {
+            color: #777;
+            padding: 10px 0;
+        }
+
+        .contador {
+            display: inline-block;
+            background: #00a86b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        @media (max-width: 700px) {
+
+            .grid,
+            .formulario {
+                grid-template-columns: 1fr;
+            }
+
+            .campo-completo {
+                grid-column: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>Centro de novedades y comunicación</p>
+
+    <button onclick="window.location.href='menu.html'">
+        ← VOLVER AL MENÚ
+    </button>
+
+</header>
+
+
+<div class="contenedor">
+
+
+    <!-- RESUMEN -->
+
+    <div class="tarjeta">
+
+        <h2>🔔 Novedades de DEXONEFIT</h2>
+
+        <p>
+            En este módulo se muestran automáticamente
+            las novedades importantes del sistema.
+        </p>
+
+        <div class="grid">
+
+            <div class="novedad vencimiento">
+
+                <h3>⏰ Membresías por vencer</h3>
+
+                <span
+                    class="contador"
+                    id="contadorPorVencer">
+                    0
+                </span>
+
+                <div id="listaPorVencer"></div>
+
+            </div>
+
+
+            <div class="novedad vencida">
+
+                <h3>⚠️ Membresías vencidas</h3>
+
+                <span
+                    class="contador"
+                    id="contadorVencidas">
+                    0
+                </span>
+
+                <div id="listaVencidas"></div>
+
+            </div>
+
+
+            <div class="novedad top">
+
+                <h3>🏆 Usuarios destacados</h3>
+
+                <div id="listaTop">
+
+                    <p class="vacio">
+                        Próximamente se mostrarán
+                        los usuarios destacados.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="novedad promocion">
+
+                <h3>🎁 Promociones</h3>
+
+                <div id="listaPromociones"></div>
+
+            </div>
+
+
+            <div class="novedad comunicado">
+
+                <h3>📢 Comunicados</h3>
+
+                <div id="listaComunicados"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PROMOCIONES -->
+
+    <div class="tarjeta">
+
+        <h2>🎁 Crear promoción</h2>
+
+        <div class="formulario">
+
+            <div>
+
+                <label>
+                    Nombre de la promoción
+                </label>
+
+                <input
+                    type="text"
+                    id="nombrePromocion"
+                    placeholder="Ej: Plan trimestral"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Vigencia
+                </label>
+
+                <input
+                    type="date"
+                    id="fechaPromocion"
+                >
+
+            </div>
+
+
+            <div class="campo-completo">
+
+                <label>
+                    Descripción
+                </label>
+
+                <textarea
+                    id="descripcionPromocion"
+                    placeholder="Describe la promoción..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="boton"
+            onclick="guardarPromocion()">
+
+            + GUARDAR PROMOCIÓN
+
+        </button>
+
+
+        <div
+            id="mensajePromocion"
+            class="mensaje">
+        </div>
+
+    </div>
+
+
+    <!-- COMUNICADOS -->
+
+    <div class="tarjeta">
+
+        <h2>📢 Crear comunicado</h2>
+
+        <div class="formulario">
+
+            <div class="campo-completo">
+
+                <label>
+                    Título
+                </label>
+
+                <input
+                    type="text"
+                    id="tituloComunicado"
+                    placeholder="Ej: Mantenimiento del gimnasio"
+                >
+
+            </div>
+
+
+            <div class="campo-completo">
+
+                <label>
+                    Mensaje
+                </label>
+
+                <textarea
+                    id="mensajeComunicado"
+                    placeholder="Escribe el comunicado..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="boton"
+            onclick="guardarComunicado()">
+
+            + PUBLICAR COMUNICADO
+
+        </button>
+
+
+        <div
+            id="mensajeComunicadoSistema"
+            class="mensaje">
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    /* =========================
+       DATOS DEL SISTEMA
+    ========================= */
+
+    let membresias = JSON.parse(
+        localStorage.getItem("membresiasDexoneFit")
+    ) || [];
+
+
+    let promociones = JSON.parse(
+        localStorage.getItem("promocionesDexoneFit")
+    ) || [];
+
+
+    let comunicados = JSON.parse(
+        localStorage.getItem("comunicadosDexoneFit")
+    ) || [];
+
+
+    /* =========================
+       OBTENER FECHA ACTUAL
+    ========================= */
+
+    function obtenerFechaActual() {
+
+        const hoy = new Date();
+
+        hoy.setHours(0, 0, 0, 0);
+
+        return hoy;
+
+    }
+
+
+    /* =========================
+       MEMBRESÍAS
+    ========================= */
+
+    function analizarMembresias() {
+
+        membresias = JSON.parse(
+            localStorage.getItem("membresiasDexoneFit")
+        ) || [];
+
+
+        const listaPorVencer =
+            document.getElementById("listaPorVencer");
+
+
+        const listaVencidas =
+            document.getElementById("listaVencidas");
+
+
+        listaPorVencer.innerHTML = "";
+
+        listaVencidas.innerHTML = "";
+
+
+        const hoy = obtenerFechaActual();
+
+
+        const porVencer = [];
+
+        const vencidas = [];
+
+
+        membresias.forEach(function(membresia) {
+
+            if (!membresia.vencimiento) {
+                return;
+            }
+
+
+            const fechaVencimiento =
+                new Date(
+                    membresia.vencimiento + "T00:00:00"
+                );
+
+
+            fechaVencimiento.setHours(0, 0, 0, 0);
+
+
+            const diferencia =
+                Math.ceil(
+                    (fechaVencimiento - hoy) /
+                    (1000 * 60 * 60 * 24)
+                );
+
+
+            if (
+                diferencia < 0 ||
+                membresia.estado === "Vencida"
+            ) {
+
+                vencidas.push(membresia);
+
+            }
+            else if (diferencia <= 7) {
+
+                porVencer.push({
+                    membresia: membresia,
+                    dias: diferencia
+                });
+
+            }
+
+        });
+
+
+        document.getElementById(
+            "contadorPorVencer"
+        ).textContent = porVencer.length;
+
+
+        document.getElementById(
+            "contadorVencidas"
+        ).textContent = vencidas.length;
+
+
+        /* POR VENCER */
+
+        if (porVencer.length === 0) {
+
+            listaPorVencer.innerHTML =
+                '<p class="vacio">No hay membresías próximas a vencer.</p>';
+
+        }
+        else {
+
+            porVencer.forEach(function(item) {
+
+                const membresia =
+                    item.membresia;
+
+
+                let textoDias;
+
+
+                if (item.dias === 0) {
+
+                    textoDias =
+                        "Vence hoy";
+
+                }
+                else if (item.dias === 1) {
+
+                    textoDias =
+                        "Vence mañana";
+
+                }
+                else {
+
+                    textoDias =
+                        "Vence en " +
+                        item.dias +
+                        " días";
+
+                }
+
+
+                listaPorVencer.innerHTML += `
+
+                    <div class="novedad">
+
+                        <strong>
+                            ${membresia.usuario}
+                        </strong>
+
+                        <p>
+                            Plan: ${membresia.tipo}
+                        </p>
+
+                        <p>
+                            📅 ${membresia.vencimiento}
+                        </p>
+
+                        <strong>
+                            ⏰ ${textoDias}
+                        </strong>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
+
+        /* VENCIDAS */
+
+        if (vencidas.length === 0) {
+
+            listaVencidas.innerHTML =
+                '<p class="vacio">No hay membresías vencidas.</p>';
+
+        }
+        else {
+
+            vencidas.forEach(function(membresia) {
+
+                listaVencidas.innerHTML += `
+
+                    <div class="novedad">
+
+                        <strong>
+                            ${membresia.usuario}
+                        </strong>
+
+                        <p>
+                            Plan: ${membresia.tipo}
+                        </p>
+
+                        <p>
+                            ❌ Vencida desde:
+                            ${membresia.vencimiento}
+                        </p>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
+    }
+
+
+    /* =========================
+       PROMOCIONES
+    ========================= */
+
+    function guardarPromocion() {
+
+        const nombre =
+            document.getElementById(
+                "nombrePromocion"
+            ).value.trim();
+
+
+        const fecha =
+            document.getElementById(
+                "fechaPromocion"
+            ).value;
+
+
+        const descripcion =
+            document.getElementById(
+                "descripcionPromocion"
+            ).value.trim();
+
+
+        if (!nombre || !fecha || !descripcion) {
+
+            document.getElementById(
+                "mensajePromocion"
+            ).textContent =
+                "⚠️ Completa todos los campos.";
+
+            return;
+
+        }
+
+
+        promociones.push({
+
+            id: Date.now(),
+
+            nombre: nombre,
+
+            fecha: fecha,
+
+            descripcion: descripcion
+
+        });
+
+
+        localStorage.setItem(
+            "promocionesDexoneFit",
+            JSON.stringify(promociones)
+        );
+
+
+        document.getElementById(
+            "nombrePromocion"
+        ).value = "";
+
+
+        document.getElementById(
+            "fechaPromocion"
+        ).value = "";
+
+
+        document.getElementById(
+            "descripcionPromocion"
+        ).value = "";
+
+
+        document.getElementById(
+            "mensajePromocion"
+        ).textContent =
+            "✅ Promoción guardada correctamente.";
+
+
+        mostrarPromociones();
+
+    }
+
+
+    function mostrarPromociones() {
+
+        const lista =
+            document.getElementById(
+                "listaPromociones"
+            );
+
+
+        lista.innerHTML = "";
+
+
+        if (promociones.length === 0) {
+
+            lista.innerHTML =
+                '<p class="vacio">No hay promociones registradas.</p>';
+
+            return;
+
+        }
+
+
+        promociones.forEach(function(
+            promocion,
+            indice
+        ) {
+
+            lista.innerHTML += `
+
+                <div class="novedad">
+
+                    <h3>
+                        🎁 ${promocion.nombre}
+                    </h3>
+
+                    <p>
+                        ${promocion.descripcion}
+                    </p>
+
+                    <p>
+                        📅 Vigencia:
+                        ${promocion.fecha}
+                    </p>
+
+                    <button
+                        class="eliminar"
+                        onclick="eliminarPromocion(${indice})">
+
+                        Eliminar
+
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    function eliminarPromocion(indice) {
+
+        const confirmar =
+            confirm(
+                "¿Deseas eliminar esta promoción?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        promociones.splice(indice, 1);
+
+
+        localStorage.setItem(
+            "promocionesDexoneFit",
+            JSON.stringify(promociones)
+        );
+
+
+        mostrarPromociones();
+
+    }
+
+
+    /* =========================
+       COMUNICADOS
+    ========================= */
+
+    function guardarComunicado() {
+
+        const titulo =
+            document.getElementById(
+                "tituloComunicado"
+            ).value.trim();
+
+
+        const mensaje =
+            document.getElementById(
+                "mensajeComunicado"
+            ).value.trim();
+
+
+        if (!titulo || !mensaje) {
+
+            document.getElementById(
+                "mensajeComunicadoSistema"
+            ).textContent =
+                "⚠️ Completa todos los campos.";
+
+            return;
+
+        }
+
+
+        comunicados.push({
+
+            id: Date.now(),
+
+            titulo: titulo,
+
+            mensaje: mensaje,
+
+            fecha: new Date()
+                .toLocaleDateString("es-CO")
+
+        });
+
+
+        localStorage.setItem(
+            "comunicadosDexoneFit",
+            JSON.stringify(comunicados)
+        );
+
+
+        document.getElementById(
+            "tituloComunicado"
+        ).value = "";
+
+
+        document.getElementById(
+            "mensajeComunicado"
+        ).value = "";
+
+
+        document.getElementById(
+            "mensajeComunicadoSistema"
+        ).textContent =
+            "✅ Comunicado publicado correctamente.";
+
+
+        mostrarComunicados();
+
+    }
+
+
+    function mostrarComunicados() {
+
+        const lista =
+            document.getElementById(
+                "listaComunicados"
+            );
+
+
+        lista.innerHTML = "";
+
+
+        if (comunicados.length === 0) {
+
+            lista.innerHTML =
+                '<p class="vacio">No hay comunicados publicados.</p>';
+
+            return;
+
+        }
+
+
+        comunicados.forEach(function(
+            comunicado,
+            indice
+        ) {
+
+            lista.innerHTML += `
+
+                <div class="novedad">
+
+                    <h3>
+                        📢 ${comunicado.titulo}
+                    </h3>
+
+                    <p>
+                        ${comunicado.mensaje}
+                    </p>
+
+                    <small>
+                        Publicado:
+                        ${comunicado.fecha}
+                    </small>
+
+                    <br>
+
+                    <button
+                        class="eliminar"
+                        onclick="eliminarComunicado(${indice})">
+
+                        Eliminar
+
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    function eliminarComunicado(indice) {
+
+        const confirmar =
+            confirm(
+                "¿Deseas eliminar este comunicado?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        comunicados.splice(indice, 1);
+
+
+        localStorage.setItem(
+            "comunicadosDexoneFit",
+            JSON.stringify(comunicados)
+        );
+
+
+        mostrarComunicados();
+
+    }
+
+
+    /* =========================
+       ACTUALIZAR TODO
+    ========================= */
+
+    function actualizarNovedades() {
+
+        analizarMembresias();
+
+        mostrarPromociones();
+
+        mostrarComunicados();
+
+    }
+
+
+    actualizarNovedades();
+
+</script>
+
+
+</body>
+
+</html>

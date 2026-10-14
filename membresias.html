@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Membresías - DEXONEFIT</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .membresia {
+            border-left: 5px solid #ff6d00;
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .membresia h3 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .dato {
+            background: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .dato strong {
+            display: block;
+            font-size: 26px;
+            color: #00a86b;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 700px) {
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>Gestión de membresías</p>
+
+    <button onclick="window.location.href='menu.html'">
+        ← VOLVER AL MENÚ
+    </button>
+
+</header>
+
+
+<div class="contenedor">
+
+
+    <!-- REGISTRAR MEMBRESÍA -->
+
+    <div class="tarjeta">
+
+        <h2>🎫 Registrar membresía</h2>
+
+
+        <label>
+            Usuario
+        </label>
+
+        <select id="usuario">
+
+            <option value="">
+                Seleccionar usuario
+            </option>
+
+        </select>
+
+
+        <label>
+            Tipo de membresía
+        </label>
+
+        <select id="tipo">
+
+            <option value="">
+                Seleccionar plan
+            </option>
+
+            <option value="Mensual">
+                Mensual
+            </option>
+
+            <option value="Trimestral">
+                Trimestral
+            </option>
+
+            <option value="Semestral">
+                Semestral
+            </option>
+
+            <option value="Anual">
+                Anual
+            </option>
+
+            <option value="Personalizado">
+                Personalizado
+            </option>
+
+        </select>
+
+
+        <label>
+            Fecha de inicio
+        </label>
+
+        <input
+            type="date"
+            id="inicio"
+        >
+
+
+        <label>
+            Fecha de vencimiento
+        </label>
+
+        <input
+            type="date"
+            id="vencimiento"
+        >
+
+
+        <label>
+            Precio
+        </label>
+
+        <input
+            type="number"
+            id="precio"
+            min="0"
+            placeholder="Ej: 150000"
+        >
+
+
+        <label>
+            Estado
+        </label>
+
+        <select id="estado">
+
+            <option value="">
+                Seleccionar estado
+            </option>
+
+            <option value="Activa">
+                Activa
+            </option>
+
+            <option value="Pendiente">
+                Pendiente
+            </option>
+
+            <option value="Vencida">
+                Vencida
+            </option>
+
+            <option value="Cancelada">
+                Cancelada
+            </option>
+
+        </select>
+
+
+        <button
+            class="boton"
+            onclick="guardarMembresia()">
+
+            + GUARDAR MEMBRESÍA
+
+        </button>
+
+
+        <div id="mensaje" class="mensaje"></div>
+
+    </div>
+
+
+    <!-- RESUMEN -->
+
+    <div class="tarjeta">
+
+        <h2>📊 Resumen de membresías</h2>
+
+        <div class="resumen">
+
+            <div class="dato">
+                Total
+                <strong id="total">
+                    0
+                </strong>
+            </div>
+
+            <div class="dato">
+                Activas
+                <strong id="activas">
+                    0
+                </strong>
+            </div>
+
+            <div class="dato">
+                Vencidas
+                <strong id="vencidas">
+                    0
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LISTADO -->
+
+    <div class="tarjeta">
+
+        <h2>📋 Membresías registradas</h2>
+
+        <div id="listaMembresias"></div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    let membresias = JSON.parse(
+        localStorage.getItem("membresiasDexoneFit")
+    ) || [];
+
+
+    let usuarios = JSON.parse(
+        localStorage.getItem("usuariosDexoneFit")
+    ) || [];
+
+
+    // CARGAR USUARIOS
+
+    function cargarUsuarios() {
+
+        const select =
+            document.getElementById("usuario");
+
+
+        select.innerHTML = `
+            <option value="">
+                Seleccionar usuario
+            </option>
+        `;
+
+
+        usuarios.forEach(function(usuario) {
+
+            const opcion =
+                document.createElement("option");
+
+
+            opcion.value =
+                usuario.nombre;
+
+
+            opcion.textContent =
+                usuario.nombre;
+
+
+            select.appendChild(opcion);
+
+        });
+
+    }
+
+
+    // GUARDAR
+
+    function guardarMembresia() {
+
+        const usuario =
+            document.getElementById("usuario").value;
+
+        const tipo =
+            document.getElementById("tipo").value;
+
+        const inicio =
+            document.getElementById("inicio").value;
+
+        const vencimiento =
+            document.getElementById("vencimiento").value;
+
+        const precio =
+            Number(document.getElementById("precio").value) || 0;
+
+        const estado =
+            document.getElementById("estado").value;
+
+
+        if (
+            !usuario ||
+            !tipo ||
+            !inicio ||
+            !vencimiento ||
+            !estado
+        ) {
+
+            document.getElementById("mensaje").textContent =
+                "⚠️ Completa los campos obligatorios.";
+
+            return;
+
+        }
+
+
+        const nuevaMembresia = {
+
+            id: Date.now(),
+
+            usuario: usuario,
+
+            tipo: tipo,
+
+            inicio: inicio,
+
+            vencimiento: vencimiento,
+
+            precio: precio,
+
+            estado: estado
+
+        };
+
+
+        membresias.push(nuevaMembresia);
+
+
+        localStorage.setItem(
+            "membresiasDexoneFit",
+            JSON.stringify(membresias)
+        );
+
+
+        limpiarFormulario();
+
+
+        document.getElementById("mensaje").textContent =
+            "✅ Membresía registrada correctamente.";
+
+
+        mostrarMembresias();
+
+        actualizarResumen();
+
+    }
+
+
+    // LIMPIAR
+
+    function limpiarFormulario() {
+
+        document.getElementById("usuario").value = "";
+
+        document.getElementById("tipo").value = "";
+
+        document.getElementById("inicio").value = "";
+
+        document.getElementById("vencimiento").value = "";
+
+        document.getElementById("precio").value = "";
+
+        document.getElementById("estado").value = "";
+
+    }
+
+
+    // MOSTRAR
+
+    function mostrarMembresias() {
+
+        const lista =
+            document.getElementById("listaMembresias");
+
+
+        lista.innerHTML = "";
+
+
+        if (membresias.length === 0) {
+
+            lista.innerHTML =
+                "<p>No hay membresías registradas.</p>";
+
+            return;
+
+        }
+
+
+        membresias.forEach(function(membresia, indice) {
+
+            const tarjeta =
+                document.createElement("div");
+
+
+            tarjeta.className =
+                "membresia";
+
+
+            tarjeta.innerHTML = `
+
+                <h3>
+                    🎫 ${membresia.usuario}
+                </h3>
+
+                <p>
+                    <strong>Plan:</strong>
+                    ${membresia.tipo}
+                </p>
+
+                <p>
+                    <strong>Inicio:</strong>
+                    ${membresia.inicio}
+                </p>
+
+                <p>
+                    <strong>Vencimiento:</strong>
+                    ${membresia.vencimiento}
+                </p>
+
+                <p>
+                    <strong>Precio:</strong>
+                    $${membresia.precio.toLocaleString("es-CO")}
+                </p>
+
+                <p>
+                    <strong>Estado:</strong>
+                    ${membresia.estado}
+                </p>
+
+                <button
+                    class="eliminar"
+                    onclick="eliminarMembresia(${indice})">
+
+                    Eliminar
+
+                </button>
+
+            `;
+
+
+            lista.appendChild(tarjeta);
+
+        });
+
+    }
+
+
+    // RESUMEN
+
+    function actualizarResumen() {
+
+        const total =
+            membresias.length;
+
+
+        const activas =
+            membresias.filter(
+                function(m) {
+                    return m.estado === "Activa";
+                }
+            ).length;
+
+
+        const vencidas =
+            membresias.filter(
+                function(m) {
+                    return m.estado === "Vencida";
+                }
+            ).length;
+
+
+        document.getElementById("total")
+            .textContent = total;
+
+
+        document.getElementById("activas")
+            .textContent = activas;
+
+
+        document.getElementById("vencidas")
+            .textContent = vencidas;
+
+    }
+
+
+    // ELIMINAR
+
+    function eliminarMembresia(indice) {
+
+        const confirmar =
+            confirm(
+                "¿Deseas eliminar esta membresía?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        membresias.splice(indice, 1);
+
+
+        localStorage.setItem(
+            "membresiasDexoneFit",
+            JSON.stringify(membresias)
+        );
+
+
+        mostrarMembresias();
+
+        actualizarResumen();
+
+    }
+
+
+    cargarUsuarios();
+
+    mostrarMembresias();
+
+    actualizarResumen();
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+<title>Lesiones - DEXONEFIT</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f2f4f7;
+        color: #333;
+    }
+    header {
+        background: #00a86b;
+        color: white;
+        text-align: center;
+        padding: 25px 20px;
+    }
+    header h1 {
+        margin: 0;
+        font-size: 30px;
+    }
+    header p {
+        margin: 8px 0;
+    }
+    .btn-menu {
+        margin-top: 10px;
+        padding: 11px 20px;
+        background: #ff6d00;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .contenedor {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+    .tarjeta {
+        background: white;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    h2 {
+        color: #00a86b;
+        margin-top: 0;
+    }
+    label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+    .obligatorio {
+        color: #d32f2f;
+    }
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        margin-top: 7px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        font-family: Arial, sans-serif;
+    }
+    textarea {
+        min-height: 90px;
+        resize: vertical;
+    }
+    .botones {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+    button {
+        border: none;
+        border-radius: 8px;
+        padding: 12px 18px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn-guardar {
+        background: #00a86b;
+        color: white;
+    }
+    .btn-limpiar {
+        background: #ff6d00;
+        color: white;
+    }
+    .btn-historial {
+        background: #555;
+        color: white;
+    }
+    .btn-estadisticas {
+        background: #1976d2;
+        color: white;
+    }
+    .mensaje {
+        display: none;
+        margin-top: 18px;
+        padding: 13px;
+        border-radius: 8px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .mensaje.exito {
+        display: block;
+        background: #e8f8f1;
+        color: #007a4d;
+    }
+    .mensaje.error {
+        display: block;
+        background: #fdeaea;
+        color: #b71c1c;
+    }
+    .resumen {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    .indicador {
+        background: #f7f7f7;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    .numero {
+        font-size: 30px;
+        font-weight: bold;
+        color: #00a86b;
+    }
+    .indicador p {
+        margin-bottom: 0;
+    }
+    .busqueda {
+        margin-bottom: 20px;
+    }
+    .lesion {
+        border-left: 6px solid #ff6d00;
+        background: #f8f8f8;
+        padding: 20px;
+        margin-top: 15px;
+        border-radius: 10px;
+    }
+    .lesion h3 {
+        color: #00a86b;
+        margin-top: 0;
+    }
+    .estado {
+        display: inline-block;
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+    .estado-activa {
+        background: #fdeaea;
+        color: #c62828;
+    }
+    .estado-recuperacion {
+        background: #fff3cd;
+        color: #856404;
+    }
+    .estado-controlada {
+        background: #e3f2fd;
+        color: #1565c0;
+    }
+    .estado-recuperada {
+        background: #e8f8f1;
+        color: #007a4d;
+    }
+    .acciones {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+    .btn-editar {
+        background: #1976d2;
+        color: white;
+    }
+    .btn-eliminar {
+        background: #d32f2f;
+        color: white;
+    }
+    .sin-datos {
+        text-align: center;
+        padding: 25px;
+        color: #777;
+    }
+    @media (max-width: 800px) {
+        .resumen {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 600px) {
+        .contenedor {
+            padding: 12px;
+        }
+        .tarjeta {
+            padding: 18px;
+        }
+        .resumen {
+            grid-template-columns: 1fr;
+        }
+        .botones button,
+        .acciones button {
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+<header>
+<h1>DEXONEFIT</h1>
+<p>Registro y seguimiento de lesiones</p>
+<button
+    class="btn-menu"
+    onclick="volverMenu()">
+    ← VOLVER AL MENÚ
+</button>
+</header>
+<div class="contenedor">
+<!-- RESUMEN -->
+<div class="tarjeta">
+    <h2>📊 Resumen de lesiones</h2>
+    <div class="resumen">
+        <div class="indicador">
+            <div
+                class="numero"
+                id="totalLesiones">
+                0
+            </div>
+            <p>Total lesiones</p>
+        </div>
+        <div class="indicador">
+            <div
+                class="numero"
+                id="lesionesActivas">
+                0
+            </div>
+            <p>Lesiones activas</p>
+        </div>
+        <div class="indicador">
+            <div
+                class="numero"
+                id="enRecuperacion">
+                0
+            </div>
+            <p>En recuperación</p>
+        </div>
+        <div class="indicador">
+            <div
+                class="numero"
+                id="lesionesRecuperadas">
+                0
+            </div>
+            <p>Recuperadas</p>
+        </div>
+    </div>
+</div>
+<!-- REGISTRAR LESIÓN -->
+<div class="tarjeta">
+    <h2 id="tituloFormulario">
+        🩹 Registrar lesión
+    </h2>
+    <label>
+        Usuario <span class="obligatorio">*</span>
+    </label>
+    <select id="usuario">
+        <option value="">
+            Seleccionar usuario
+        </option>
+    </select>
+    <label>
+        Zona corporal <span class="obligatorio">*</span>
+    </label>
+    <select id="zona">
+        <option value="">
+            Seleccionar zona
+        </option>
+        <option>Hombro</option>
+        <option>Codo</option>
+        <option>Muñeca</option>
+        <option>Mano</option>
+        <option>Cuello</option>
+        <option>Espalda</option>
+        <option>Zona lumbar</option>
+        <option>Cadera</option>
+        <option>Rodilla</option>
+        <option>Tobillo</option>
+        <option>Pie</option>
+        <option>Muslo</option>
+        <option>Pierna</option>
+        <option>Otra</option>
+    </select>
+    <label>
+        Tipo de lesión <span class="obligatorio">*</span>
+    </label>
+    <select id="tipo">
+        <option value="">
+            Seleccionar tipo
+        </option>
+        <option>Esguince</option>
+        <option>Distensión muscular</option>
+        <option>Tendinitis</option>
+        <option>Tendinopatía</option>
+        <option>Desgarro muscular</option>
+        <option>Fractura</option>
+        <option>Luxación</option>
+        <option>Dolor musculoesquelético</option>
+        <option>Contusión</option>
+        <option>Otra</option>
+    </select>
+    <label>Fecha de lesión</label>
+    <input
+        type="date"
+        id="fecha">
+    <label>Nivel de dolor (0 - 10)</label>
+    <input
+        type="number"
+        id="dolor"
+        min="0"
+        max="10"
+        placeholder="Ejemplo: 4">
+    <label>
+        Estado <span class="obligatorio">*</span>
+    </label>
+    <select id="estado">
+        <option value="">
+            Seleccionar estado
+        </option>
+        <option>Activa</option>
+        <option>En recuperación</option>
+        <option>Controlada</option>
+        <option>Recuperada</option>
+    </select>
+    <label>Restricciones para el entrenamiento</label>
+    <textarea
+        id="restricciones"
+        placeholder="Ejemplo: evitar saltos, cargas altas, sentadillas..."></textarea>
+    <label>Observaciones</label>
+    <textarea
+        id="observaciones"
+        placeholder="Información adicional de la lesión..."></textarea>
+    <div class="botones">
+        <button
+            class="btn-guardar"
+            id="btnGuardar"
+            onclick="guardarLesion()">
+            💾 GUARDAR LESIÓN
+        </button>
+        <button
+            class="btn-limpiar"
+            onclick="limpiarFormulario()">
+            🧹 LIMPIAR
+        </button>
+    </div>
+    <div id="mensaje"></div>
+</div>
+<!-- BÚSQUEDA -->
+<div class="tarjeta">
+    <h2>🔎 Buscar lesiones</h2>
+    <input
+        type="text"
+        id="buscar"
+        placeholder="Buscar por usuario, zona o tipo de lesión..."
+        oninput="buscarLesiones()">
+</div>
+<!-- HISTORIAL -->
+<div class="tarjeta">
+    <h2>📋 Historial de lesiones</h2>
+    <div id="listaLesiones"></div>
+</div>
+<!-- BOTONES -->
+<div class="tarjeta">
+    <div class="botones">
+        <button
+            class="btn-estadisticas"
+            onclick="abrirEstadisticas()">
+            📊 VER ESTADÍSTICAS
+        </button>
+        <button
+            class="btn-historial"
+            onclick="mostrarTodo()">
+            📋 VER TODAS
+        </button>
+        <button
+            class="btn-limpiar"
+            onclick="limpiarFormulario()">
+            🧹 NUEVA LESIÓN
+        </button>
+        <button
+            class="btn-menu"
+            onclick="volverMenu()">
+            🏠 VOLVER AL INICIO
+        </button>
+    </div>
+</div>
+</div>
+<script>
+let lesiones =
+    JSON.parse(
+        localStorage.getItem(
+            "lesionesDexoneFit"
+        )
+    ) || [];
+let usuarios =
+    JSON.parse(
+        localStorage.getItem(
+            "usuariosDexoneFit"
+        )
+    ) || [];
+let indiceEditando = -1;
+/* CARGAR USUARIOS */
+function cargarUsuarios() {
+    const select =
+        document.getElementById("usuario");
+    select.innerHTML = `
+        <option value="">
+            Seleccionar usuario
+        </option>
+    `;
+    usuarios.forEach(function(usuario) {
+        const nombre =
+            usuario.nombre ||
+            usuario.nombres ||
+            usuario.name ||
+            "";
+        if (nombre) {
+            const opcion =
+                document.createElement("option");
+            opcion.value = nombre;
+            opcion.textContent = nombre;
+            select.appendChild(opcion);
+        }
+    });
+}
+/* GUARDAR LESIÓN */
+function guardarLesion() {
+    const usuario =
+        document.getElementById("usuario").value;
+    const zona =
+        document.getElementById("zona").value;
+    const tipo =
+        document.getElementById("tipo").value;
+    const fecha =
+        document.getElementById("fecha").value;
+    const dolor =
+        document.getElementById("dolor").value;
+    const estado =
+        document.getElementById("estado").value;
+    const restricciones =
+        document.getElementById("restricciones").value.trim();
+    const observaciones =
+        document.getElementById("observaciones").value.trim();
+    if (!usuario || !zona || !tipo || !estado) {
+        mostrarMensaje(
+            "⚠️ Completa todos los campos obligatorios.",
+            "error"
+        );
+        return;
+    }
+    if (
+        dolor !== "" &&
+        (
+            Number(dolor) < 0 ||
+            Number(dolor) > 10
+        )
+    ) {
+        mostrarMensaje(
+            "⚠️ El nivel de dolor debe estar entre 0 y 10.",
+            "error"
+        );
+        return;
+    }
+    const datos = {
+        usuario,
+        zona,
+        tipo,
+        fecha,
+        dolor,
+        estado,
+        restricciones,
+        observaciones
+    };
+    if (indiceEditando !== -1) {
+        lesiones[indiceEditando] = {
+            ...lesiones[indiceEditando],
+            ...datos
+        };
+        mostrarMensaje(
+            "✅ Lesión actualizada correctamente.",
+            "exito"
+        );
+    }
+    else {
+        lesiones.push({
+            id: Date.now(),
+            ...datos
+        });
+        mostrarMensaje(
+            "✅ Lesión registrada correctamente.",
+            "exito"
+        );
+    }
+    localStorage.setItem(
+        "lesionesDexoneFit",
+        JSON.stringify(lesiones)
+    );
+    limpiarCampos();
+    indiceEditando = -1;
+    actualizarBoton();
+    actualizarResumen();
+    mostrarLesiones();
+}
+/* MENSAJE */
+function mostrarMensaje(texto, tipo) {
+    const mensaje =
+        document.getElementById("mensaje");
+    mensaje.textContent = texto;
+    mensaje.className =
+        "mensaje " + tipo;
+    setTimeout(function() {
+        mensaje.className = "";
+        mensaje.textContent = "";
+    }, 3000);
+}
+/* LIMPIAR CAMPOS */
+function limpiarCampos() {
+    document.getElementById("usuario").value = "";
+    document.getElementById("zona").value = "";
+    document.getElementById("tipo").value = "";
+    document.getElementById("fecha").value = "";
+    document.getElementById("dolor").value = "";
+    document.getElementById("estado").value = "";
+    document.getElementById("restricciones").value = "";
+    document.getElementById("observaciones").value = "";
+}
+/* LIMPIAR FORMULARIO */
+function limpiarFormulario() {
+    indiceEditando = -1;
+    limpiarCampos();
+    actualizarBoton();
+}
+/* BOTÓN */
+function actualizarBoton() {
+    const boton =
+        document.getElementById("btnGuardar");
+    if (indiceEditando !== -1) {
+        boton.textContent =
+            "💾 ACTUALIZAR LESIÓN";
+        document.getElementById(
+            "tituloFormulario"
+        ).textContent =
+            "✏️ Editar lesión";
+    }
+    else {
+        boton.textContent =
+            "💾 GUARDAR LESIÓN";
+        document.getElementById(
+            "tituloFormulario"
+        ).textContent =
+            "🩹 Registrar lesión";
+    }
+}
+/* EDITAR */
+function editarLesion(indice) {
+    const lesion =
+        lesiones[indice];
+    if (!lesion) return;
+    indiceEditando = indice;
+    document.getElementById("usuario").value =
+        lesion.usuario;
+    document.getElementById("zona").value =
+        lesion.zona;
+    document.getElementById("tipo").value =
+        lesion.tipo;
+    document.getElementById("fecha").value =
+        lesion.fecha || "";
+    document.getElementById("dolor").value =
+        lesion.dolor || "";
+    document.getElementById("estado").value =
+        lesion.estado;
+    document.getElementById("restricciones").value =
+        lesion.restricciones || "";
+    document.getElementById("observaciones").value =
+        lesion.observaciones || "";
+    actualizarBoton();
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+/* ELIMINAR */
+function eliminarLesion(indice) {
+    if (!confirm("¿Deseas eliminar esta lesión?")) {
+        return;
+    }
+    lesiones.splice(indice, 1);
+    localStorage.setItem(
+        "lesionesDexoneFit",
+        JSON.stringify(lesiones)
+    );
+    actualizarResumen();
+    mostrarLesiones();
+}
+/* ESTADO */
+function claseEstado(estado) {
+    if (estado === "Activa")
+        return "estado-activa";
+    if (estado === "En recuperación")
+        return "estado-recuperacion";
+    if (estado === "Controlada")
+        return "estado-controlada";
+    if (estado === "Recuperada")
+        return "estado-recuperada";
+    return "";
+}
+/* MOSTRAR */
+function mostrarLesiones(datos = lesiones) {
+    const lista =
+        document.getElementById(
+            "listaLesiones"
+        );
+    lista.innerHTML = "";
+    if (datos.length === 0) {
+        lista.innerHTML =
+            `
+            <div class="sin-datos">
+                🩹 No hay lesiones registradas.
+            </div>
+            `;
+        return;
+    }
+    datos
+        .slice()
+        .reverse()
+        .forEach(function(lesion) {
+            const indice =
+                lesiones.findIndex(
+                    function(item) {
+                        return item.id === lesion.id;
+                    }
+                );
+            const tarjeta =
+                document.createElement("div");
+            tarjeta.className = "lesion";
+            tarjeta.innerHTML = `
+                <h3>
+                    🩹 ${lesion.usuario}
+                </h3>
+                <p>
+                    <strong>Zona corporal:</strong>
+                    ${lesion.zona}
+                </p>
+                <p>
+                    <strong>Tipo:</strong>
+                    ${lesion.tipo}
+                </p>
+                <p>
+                    <strong>Fecha:</strong>
+                    ${lesion.fecha || "No registrada"}
+                </p>
+                <p>
+                    <strong>Nivel de dolor:</strong>
+                    ${
+                        lesion.dolor !== ""
+                        ? lesion.dolor + " / 10"
+                        : "No registrado"
+                    }
+                </p>
+                <p>
+                    <strong>Estado:</strong>
+                    <span class="estado ${claseEstado(lesion.estado)}">
+                        ${lesion.estado}
+                    </span>
+                </p>
+                <p>
+                    <strong>Restricciones:</strong>
+                    ${lesion.restricciones || "Ninguna registrada"}
+                </p>
+                <p>
+                    <strong>Observaciones:</strong>
+                    ${lesion.observaciones || "Sin observaciones"}
+                </p>
+                <div class="acciones">
+                    <button
+                        class="btn-editar"
+                        onclick="editarLesion(${indice})">
+                        ✏️ Editar
+                    </button>
+                    <button
+                        class="btn-eliminar"
+                        onclick="eliminarLesion(${indice})">
+                        🗑️ Eliminar
+                    </button>
+                </div>
+            `;
+            lista.appendChild(tarjeta);
+        });
+}
+/* BUSCAR */
+function buscarLesiones() {
+    const texto =
+        document.getElementById("buscar")
+        .value
+        .toLowerCase()
+        .trim();
+    if (!texto) {
+        mostrarLesiones();
+        return;
+    }
+    const resultados =
+        lesiones.filter(function(lesion) {
+            return (
+                String(lesion.usuario)
+                    .toLowerCase()
+                    .includes(texto)
+                ||
+                String(lesion.zona)
+                    .toLowerCase()
+                    .includes(texto)
+                ||
+                String(lesion.tipo)
+                    .toLowerCase()
+                    .includes(texto)
+                ||
+                String(lesion.estado)
+                    .toLowerCase()
+                    .includes(texto)
+            );
+        });
+    mostrarLesiones(resultados);
+}
+/* RESUMEN */
+function actualizarResumen() {
+    document.getElementById(
+        "totalLesiones"
+    ).textContent =
+        lesiones.length;
+    document.getElementById(
+        "lesionesActivas"
+    ).textContent =
+        lesiones.filter(
+            lesion => lesion.estado === "Activa"
+        ).length;
+    document.getElementById(
+        "enRecuperacion"
+    ).textContent =
+        lesiones.filter(
+            lesion => lesion.estado === "En recuperación"
+        ).length;
+    document.getElementById(
+        "lesionesRecuperadas"
+    ).textContent =
+        lesiones.filter(
+            lesion => lesion.estado === "Recuperada"
+        ).length;
+}
+/* MOSTRAR TODO */
+function mostrarTodo() {
+    document.getElementById(
+        "buscar"
+    ).value = "";
+    mostrarLesiones();
+}
+/* =========================================
+   NAVEGACIÓN CORREGIDA
+========================================= */
+function abrirEstadisticas() {
+    window.location.href =
+        "./Estadísticas_lesiones/Estadísticas_lesiones.html";
+}
+function volverMenu() {
+    window.location.href =
+        "./menú.html";
+}
+/* INICIAR */
+cargarUsuarios();
+actualizarResumen();
+mostrarLesiones();
+</script>
+</body>
+</html>

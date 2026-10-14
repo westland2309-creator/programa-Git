@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <!-- ═══════════════════════════════════════════════════════
+         1. CONFIGURACIÓN DEL DOCUMENTO
+    ═══════════════════════════════════════════════════════ -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Entrenamientos - DexoneFit</title>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         2. ESTILOS CSS
+    ═══════════════════════════════════════════════════════ -->
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        header button:hover {
+            background: #e65100;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .rutina {
+            border-left: 5px solid #ff6d00;
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .rutina h3 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         3. ENCABEZADO
+    ═══════════════════════════════════════════════════════ -->
+
+    <header>
+
+        <h1>DEXONE FIT</h1>
+
+        <p>Gestión de entrenamientos</p>
+
+        <button onclick="window.location.href='menu.html'">
+
+            ← VOLVER AL MENÚ
+
+        </button>
+
+    </header>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         4. CONTENEDOR PRINCIPAL
+    ═══════════════════════════════════════════════════════ -->
+
+    <div class="contenedor">
+
+
+        <!-- ═══════════════════════════════════════════════════
+             5. CREAR ENTRENAMIENTO
+        ═══════════════════════════════════════════════════ -->
+
+        <div class="tarjeta">
+
+            <h2>Crear entrenamiento</h2>
+
+
+            <!-- USUARIO -->
+
+            <label>Usuario</label>
+
+            <select id="usuario">
+
+                <option value="">
+                    Seleccionar usuario
+                </option>
+
+            </select>
+
+
+            <!-- NOMBRE DE LA RUTINA -->
+
+            <label>Nombre de la rutina</label>
+
+            <input
+                type="text"
+                id="nombreRutina"
+                placeholder="Ej: Rutina de hipertrofia"
+            >
+
+
+            <!-- OBJETIVO -->
+
+            <label>Objetivo</label>
+
+            <select id="objetivo">
+
+                <option value="">
+                    Seleccionar objetivo
+                </option>
+
+                <option value="Hipertrofia">
+                    Hipertrofia
+                </option>
+
+                <option value="Fuerza">
+                    Fuerza
+                </option>
+
+                <option value="Pérdida de grasa">
+                    Pérdida de grasa
+                </option>
+
+                <option value="Resistencia">
+                    Resistencia
+                </option>
+
+                <option value="Recomposición corporal">
+                    Recomposición corporal
+                </option>
+
+            </select>
+
+
+            <!-- DÍAS POR SEMANA -->
+
+            <label>Días por semana</label>
+
+            <select id="dias">
+
+                <option value="">
+                    Seleccionar
+                </option>
+
+                <option value="2 días">
+                    2 días
+                </option>
+
+                <option value="3 días">
+                    3 días
+                </option>
+
+                <option value="4 días">
+                    4 días
+                </option>
+
+                <option value="5 días">
+                    5 días
+                </option>
+
+                <option value="6 días">
+                    6 días
+                </option>
+
+            </select>
+
+
+            <!-- EJERCICIOS -->
+
+            <label>Ejercicios</label>
+
+            <textarea
+                id="ejercicios"
+                placeholder="Ejemplo:
+Sentadilla - 4 series x 10 repeticiones
+Press banca - 4 series x 10 repeticiones
+Remo - 3 series x 12 repeticiones"
+            ></textarea>
+
+
+            <!-- GUARDAR ENTRENAMIENTO -->
+
+            <button
+                class="boton"
+                onclick="guardarRutina()">
+
+                + GUARDAR ENTRENAMIENTO
+
+            </button>
+
+
+            <!-- MENSAJE -->
+
+            <div
+                id="mensaje"
+                class="mensaje">
+            </div>
+
+        </div>
+
+
+        <!-- ═══════════════════════════════════════════════════
+             6. LISTADO DE ENTRENAMIENTOS
+        ═══════════════════════════════════════════════════ -->
+
+        <div class="tarjeta">
+
+            <h2>Entrenamientos registrados</h2>
+
+            <div id="listaRutinas"></div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         7. JAVASCRIPT
+    ═══════════════════════════════════════════════════════ -->
+
+
+    <script>
+
+        // ═══════════════════════════════════════════════════════
+        // 7.1 VARIABLES Y LOCALSTORAGE
+        // ═══════════════════════════════════════════════════════
+
+        let rutinas = JSON.parse(
+            localStorage.getItem("rutinasDexoneFit")
+        ) || [];
+
+
+        let usuarios = JSON.parse(
+            localStorage.getItem("usuariosDexoneFit")
+        ) || [];
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.2 CARGAR USUARIOS
+        // ═══════════════════════════════════════════════════════
+
+        function cargarUsuarios() {
+
+            const select =
+                document.getElementById("usuario");
+
+            usuarios.forEach(function(usuario) {
+
+                const opcion =
+                    document.createElement("option");
+
+                opcion.value = usuario.nombre;
+
+                opcion.textContent = usuario.nombre;
+
+                select.appendChild(opcion);
+
+            });
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.3 GUARDAR ENTRENAMIENTO
+        // ═══════════════════════════════════════════════════════
+
+        function guardarRutina() {
+
+            const usuario =
+                document.getElementById("usuario").value;
+
+            const nombre =
+                document.getElementById("nombreRutina").value.trim();
+
+            const objetivo =
+                document.getElementById("objetivo").value;
+
+            const dias =
+                document.getElementById("dias").value;
+
+            const ejercicios =
+                document.getElementById("ejercicios").value.trim();
+
+
+            if (
+                !usuario ||
+                !nombre ||
+                !objetivo ||
+                !dias ||
+                !ejercicios
+            ) {
+
+                document.getElementById("mensaje").textContent =
+                    "⚠️ Completa todos los campos.";
+
+                return;
+            }
+
+
+            const nuevaRutina = {
+
+                usuario: usuario,
+
+                nombre: nombre,
+
+                objetivo: objetivo,
+
+                dias: dias,
+
+                ejercicios: ejercicios
+
+            };
+
+
+            rutinas.push(nuevaRutina);
+
+
+            localStorage.setItem(
+                "rutinasDexoneFit",
+                JSON.stringify(rutinas)
+            );
+
+
+            // LIMPIAR FORMULARIO
+
+            document.getElementById("usuario").value = "";
+
+            document.getElementById("nombreRutina").value = "";
+
+            document.getElementById("objetivo").value = "";
+
+            document.getElementById("dias").value = "";
+
+            document.getElementById("ejercicios").value = "";
+
+
+            document.getElementById("mensaje").textContent =
+                "✅ Entrenamiento guardado correctamente.";
+
+
+            mostrarRutinas();
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.4 MOSTRAR ENTRENAMIENTOS
+        // ═══════════════════════════════════════════════════════
+
+        function mostrarRutinas() {
+
+            const lista =
+                document.getElementById("listaRutinas");
+
+            lista.innerHTML = "";
+
+
+            if (rutinas.length === 0) {
+
+                lista.innerHTML =
+                    "<p>No hay entrenamientos registrados.</p>";
+
+                return;
+
+            }
+
+
+            rutinas.forEach(function(rutina, indice) {
+
+                const tarjeta =
+                    document.createElement("div");
+
+                tarjeta.className = "rutina";
+
+
+                tarjeta.innerHTML = `
+
+                    <h3>🏋️ ${rutina.nombre}</h3>
+
+                    <p>
+                        <strong>Usuario:</strong>
+                        ${rutina.usuario}
+                    </p>
+
+                    <p>
+                        <strong>Objetivo:</strong>
+                        ${rutina.objetivo}
+                    </p>
+
+                    <p>
+                        <strong>Días:</strong>
+                        ${rutina.dias}
+                    </p>
+
+                    <p>
+                        <strong>Ejercicios:</strong>
+                    </p>
+
+                    <p>
+                        ${rutina.ejercicios.replace(/\n/g, "<br>")}
+                    </p>
+
+                    <button
+                        class="eliminar"
+                        onclick="eliminarRutina(${indice})">
+
+                        Eliminar
+
+                    </button>
+
+                `;
+
+
+                lista.appendChild(tarjeta);
+
+            });
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.5 ELIMINAR ENTRENAMIENTO
+        // ═══════════════════════════════════════════════════════
+
+        function eliminarRutina(indice) {
+
+            const confirmar =
+                confirm(
+                    "¿Deseas eliminar este entrenamiento?"
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            rutinas.splice(indice, 1);
+
+
+            localStorage.setItem(
+                "rutinasDexoneFit",
+                JSON.stringify(rutinas)
+            );
+
+
+            mostrarRutinas();
+
+        }
+
+
+        // ═══════════════════════════════════════════════════════
+        // 7.6 INICIALIZAR PÁGINA
+        // ═══════════════════════════════════════════════════════
+
+        cargarUsuarios();
+
+        mostrarRutinas();
+
+
+    </script>
+
+
+</body>
+
+</html>

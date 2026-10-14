@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Factores de Riesgo - DEXONEFIT</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .riesgo {
+            border-left: 5px solid #ff6d00;
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .riesgo h3 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        .obligatorio {
+            color: #d32f2f;
+        }
+
+        .aviso {
+            background: #fff3cd;
+            border-left: 5px solid #ff6d00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>Evaluación de factores de riesgo</p>
+
+    <button onclick="window.location.href='menu.html'">
+
+        ← VOLVER AL MENÚ
+
+    </button>
+
+</header>
+
+
+<div class="contenedor">
+
+
+    <div class="aviso">
+
+        ⚠️ <strong>Importante:</strong>
+        Esta información corresponde a factores reportados
+        durante la valoración del usuario y sirve como apoyo
+        para la planificación del entrenamiento.
+
+    </div>
+
+
+    <!-- REGISTRO -->
+
+    <div class="tarjeta">
+
+        <h2>⚠️ Registrar factor de riesgo</h2>
+
+
+        <label>
+            Usuario <span class="obligatorio">*</span>
+        </label>
+
+        <select id="usuario">
+
+            <option value="">
+                Seleccionar usuario
+            </option>
+
+        </select>
+
+
+        <label>
+            Factor de riesgo <span class="obligatorio">*</span>
+        </label>
+
+        <select id="factor">
+
+            <option value="">
+                Seleccionar factor
+            </option>
+
+            <option value="Sedentarismo">
+                Sedentarismo
+            </option>
+
+            <option value="Tabaquismo">
+                Tabaquismo
+            </option>
+
+            <option value="Consumo frecuente de alcohol">
+                Consumo frecuente de alcohol
+            </option>
+
+            <option value="Sobrepeso">
+                Sobrepeso
+            </option>
+
+            <option value="Obesidad">
+                Obesidad
+            </option>
+
+            <option value="Hipertensión">
+                Hipertensión
+            </option>
+
+            <option value="Colesterol elevado">
+                Colesterol elevado
+            </option>
+
+            <option value="Triglicéridos elevados">
+                Triglicéridos elevados
+            </option>
+
+            <option value="Antecedentes familiares cardiovasculares">
+                Antecedentes familiares cardiovasculares
+            </option>
+
+            <option value="Antecedentes familiares de diabetes">
+                Antecedentes familiares de diabetes
+            </option>
+
+            <option value="Baja condición cardiovascular">
+                Baja condición cardiovascular
+            </option>
+
+            <option value="Estrés elevado">
+                Estrés elevado
+            </option>
+
+            <option value="Sueño insuficiente">
+                Sueño insuficiente
+            </option>
+
+            <option value="Inactividad física">
+                Inactividad física
+            </option>
+
+            <option value="Otro">
+                Otro
+            </option>
+
+        </select>
+
+
+        <label>
+            Nivel de riesgo <span class="obligatorio">*</span>
+        </label>
+
+        <select id="nivel">
+
+            <option value="">
+                Seleccionar nivel
+            </option>
+
+            <option value="Bajo">
+                Bajo
+            </option>
+
+            <option value="Moderado">
+                Moderado
+            </option>
+
+            <option value="Alto">
+                Alto
+            </option>
+
+        </select>
+
+
+        <label>
+            Fecha de valoración
+        </label>
+
+        <input
+            type="date"
+            id="fecha"
+        >
+
+
+        <label>
+            Observaciones
+        </label>
+
+        <textarea
+            id="observaciones"
+            placeholder="Escribe información relevante..."
+        ></textarea>
+
+
+        <label>
+            Recomendaciones para el entrenamiento
+        </label>
+
+        <textarea
+            id="recomendaciones"
+            placeholder="Ej: controlar intensidad, realizar valoración previa..."
+        ></textarea>
+
+
+        <button
+            class="boton"
+            onclick="guardarRiesgo()">
+
+            + GUARDAR FACTOR DE RIESGO
+
+        </button>
+
+
+        <div
+            id="mensaje"
+            class="mensaje">
+        </div>
+
+    </div>
+
+
+    <!-- HISTORIAL -->
+
+    <div class="tarjeta">
+
+        <h2>📋 Factores de riesgo registrados</h2>
+
+        <div id="listaRiesgos"></div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    let riesgos = JSON.parse(
+        localStorage.getItem("factoresRiesgoDexoneFit")
+    ) || [];
+
+
+    let usuarios = JSON.parse(
+        localStorage.getItem("usuariosDexoneFit")
+    ) || [];
+
+
+    // CARGAR USUARIOS
+
+    function cargarUsuarios() {
+
+        const select =
+            document.getElementById("usuario");
+
+
+        select.innerHTML = `
+            <option value="">
+                Seleccionar usuario
+            </option>
+        `;
+
+
+        usuarios.forEach(function(usuario) {
+
+            const opcion =
+                document.createElement("option");
+
+
+            opcion.value =
+                usuario.nombre;
+
+
+            opcion.textContent =
+                usuario.nombre;
+
+
+            select.appendChild(opcion);
+
+        });
+
+    }
+
+
+    // GUARDAR FACTOR DE RIESGO
+
+    function guardarRiesgo() {
+
+        const usuario =
+            document.getElementById("usuario").value;
+
+
+        const factor =
+            document.getElementById("factor").value;
+
+
+        const nivel =
+            document.getElementById("nivel").value;
+
+
+        const fecha =
+            document.getElementById("fecha").value;
+
+
+        const observaciones =
+            document
+            .getElementById("observaciones")
+            .value
+            .trim();
+
+
+        const recomendaciones =
+            document
+            .getElementById("recomendaciones")
+            .value
+            .trim();
+
+
+        if (
+            !usuario ||
+            !factor ||
+            !nivel
+        ) {
+
+            document.getElementById("mensaje").textContent =
+                "⚠️ Completa los campos obligatorios.";
+
+            return;
+
+        }
+
+
+        const nuevoRiesgo = {
+
+            id: Date.now(),
+
+            usuario: usuario,
+
+            factor: factor,
+
+            nivel: nivel,
+
+            fecha: fecha,
+
+            observaciones: observaciones,
+
+            recomendaciones: recomendaciones
+
+        };
+
+
+        riesgos.push(nuevoRiesgo);
+
+
+        localStorage.setItem(
+            "factoresRiesgoDexoneFit",
+            JSON.stringify(riesgos)
+        );
+
+
+        limpiarFormulario();
+
+
+        document.getElementById("mensaje").textContent =
+            "✅ Factor de riesgo registrado correctamente.";
+
+
+        mostrarRiesgos();
+
+    }
+
+
+    // LIMPIAR
+
+    function limpiarFormulario() {
+
+        document.getElementById("usuario").value = "";
+
+        document.getElementById("factor").value = "";
+
+        document.getElementById("nivel").value = "";
+
+        document.getElementById("fecha").value = "";
+
+        document.getElementById("observaciones").value = "";
+
+        document.getElementById("recomendaciones").value = "";
+
+    }
+
+
+    // MOSTRAR
+
+    function mostrarRiesgos() {
+
+        const lista =
+            document.getElementById("listaRiesgos");
+
+
+        lista.innerHTML = "";
+
+
+        if (riesgos.length === 0) {
+
+            lista.innerHTML =
+                "<p>No hay factores de riesgo registrados.</p>";
+
+            return;
+
+        }
+
+
+        riesgos.forEach(function(riesgo, indice) {
+
+            const tarjeta =
+                document.createElement("div");
+
+
+            tarjeta.className =
+                "riesgo";
+
+
+            tarjeta.innerHTML = `
+
+                <h3>
+                    ⚠️ ${riesgo.usuario}
+                </h3>
+
+                <p>
+                    <strong>Factor:</strong>
+                    ${riesgo.factor}
+                </p>
+
+                <p>
+                    <strong>Nivel:</strong>
+                    ${riesgo.nivel}
+                </p>
+
+                <p>
+                    <strong>Fecha:</strong>
+                    ${riesgo.fecha || "No registrada"}
+                </p>
+
+                <p>
+                    <strong>Observaciones:</strong>
+                    ${riesgo.observaciones || "Sin observaciones"}
+                </p>
+
+                <p>
+                    <strong>Recomendaciones:</strong>
+                    ${riesgo.recomendaciones || "Sin recomendaciones"}
+                </p>
+
+                <button
+                    class="eliminar"
+                    onclick="eliminarRiesgo(${indice})">
+
+                    Eliminar
+
+                </button>
+
+            `;
+
+
+            lista.appendChild(tarjeta);
+
+        });
+
+    }
+
+
+    // ELIMINAR
+
+    function eliminarRiesgo(indice) {
+
+        const confirmar =
+            confirm(
+                "¿Deseas eliminar este factor de riesgo?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        riesgos.splice(indice, 1);
+
+
+        localStorage.setItem(
+            "factoresRiesgoDexoneFit",
+            JSON.stringify(riesgos)
+        );
+
+
+        mostrarRiesgos();
+
+    }
+
+
+    cargarUsuarios();
+
+    mostrarRiesgos();
+
+
+</script>
+
+
+</body>
+
+</html>

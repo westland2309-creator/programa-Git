@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas - DEXONEFIT</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .volver {
+            background: #ff6d00;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .contenedor {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        .tarjetas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+        }
+        .tarjeta h2 {
+            font-size: 18px;
+            color: #555;
+        }
+        .numero {
+            font-size: 32px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+        .naranja {
+            color: #ff6d00;
+        }
+        @media (max-width: 800px) {
+            .tarjetas {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 500px) {
+            .tarjetas {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>DEXONEFIT</h1>
+    <p>Estadísticas generales del gimnasio</p>
+    <button
+        class="volver"
+        onclick="window.location.href='menu.html'">
+        ← VOLVER AL MENÚ
+    </button>
+</header>
+<div class="contenedor">
+    <h2>📊 Resumen general</h2>
+    <div class="tarjetas">
+        <div class="tarjeta">
+            <h2>👥 Usuarios</h2>
+            <div
+                class="numero"
+                id="usuarios">
+                0
+            </div>
+        </div>
+        <div class="tarjeta">
+            <h2>🎫 Membresías</h2>
+            <div
+                class="numero"
+                id="membresias">
+                0
+            </div>
+        </div>
+        <div class="tarjeta">
+            <h2>📏 Mediciones</h2>
+            <div
+                class="numero"
+                id="mediciones">
+                0
+            </div>
+        </div>
+        <div class="tarjeta">
+            <h2>🔧 Equipos</h2>
+            <div
+                class="numero"
+                id="equipos">
+                0
+            </div>
+        </div>
+        <div class="tarjeta">
+            <h2>🏋️ Entrenamientos</h2>
+            <div
+                class="numero"
+                id="entrenamientos">
+                0
+            </div>
+        </div>
+        <div class="tarjeta">
+            <h2>💪 Volumen total</h2>
+            <div
+                class="numero naranja"
+                id="volumen">
+                0 kg
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const usuarios =
+        JSON.parse(
+            localStorage.getItem(
+                "usuariosDexoneFit"
+            )
+        ) || [];
+    const membresias =
+        JSON.parse(
+            localStorage.getItem(
+                "membresiasDexoneFit"
+            )
+        ) || [];
+    const mediciones =
+        JSON.parse(
+            localStorage.getItem(
+                "medicionesDexoneFit"
+            )
+        ) || [];
+    const equipos =
+        JSON.parse(
+            localStorage.getItem(
+                "equiposDexoneFit"
+            )
+        ) || [];
+    const entrenamientos =
+        JSON.parse(
+            localStorage.getItem(
+                "volumenDexoneFit"
+            )
+        ) || [];
+    document.getElementById(
+        "usuarios"
+    ).textContent =
+        usuarios.length;
+    document.getElementById(
+        "membresias"
+    ).textContent =
+        membresias.length;
+    document.getElementById(
+        "mediciones"
+    ).textContent =
+        mediciones.length;
+    document.getElementById(
+        "equipos"
+    ).textContent =
+        equipos.length;
+    document.getElementById(
+        "entrenamientos"
+    ).textContent =
+        entrenamientos.length;
+    let volumenTotal = 0;
+    entrenamientos.forEach(
+        function(entrenamiento) {
+            volumenTotal +=
+                Number(
+                    entrenamiento.volumen
+                ) || 0;
+        }
+    );
+    document.getElementById(
+        "volumen"
+    ).textContent =
+        volumenTotal.toLocaleString(
+            "es-CO"
+        ) + " kg";
+</script>
+</body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Patologías - DEXONEFIT</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .patologia {
+            border-left: 5px solid #ff6d00;
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .patologia h3 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        .obligatorio {
+            color: #d32f2f;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>Registro de patologías del usuario</p>
+
+    <button onclick="window.location.href='menu.html'">
+        ← VOLVER AL MENÚ
+    </button>
+
+</header>
+
+
+<div class="contenedor">
+
+
+    <!-- REGISTRO -->
+
+    <div class="tarjeta">
+
+        <h2>🩺 Registrar patología</h2>
+
+
+        <label>
+            Usuario <span class="obligatorio">*</span>
+        </label>
+
+        <select id="usuario">
+
+            <option value="">
+                Seleccionar usuario
+            </option>
+
+        </select>
+
+
+        <label>
+            Patología <span class="obligatorio">*</span>
+        </label>
+
+        <select id="patologia">
+
+            <option value="">
+                Seleccionar patología
+            </option>
+
+            <option value="Hipertensión arterial">
+                Hipertensión arterial
+            </option>
+
+            <option value="Diabetes tipo 1">
+                Diabetes tipo 1
+            </option>
+
+            <option value="Diabetes tipo 2">
+                Diabetes tipo 2
+            </option>
+
+            <option value="Obesidad">
+                Obesidad
+            </option>
+
+            <option value="Asma">
+                Asma
+            </option>
+
+            <option value="Artritis">
+                Artritis
+            </option>
+
+            <option value="Artrosis">
+                Artrosis
+            </option>
+
+            <option value="Osteoporosis">
+                Osteoporosis
+            </option>
+
+            <option value="Osteopenia">
+                Osteopenia
+            </option>
+
+            <option value="Escoliosis">
+                Escoliosis
+            </option>
+
+            <option value="Hernia discal">
+                Hernia discal
+            </option>
+
+            <option value="Hernia cervical">
+                Hernia cervical
+            </option>
+
+            <option value="Hernia lumbar">
+                Hernia lumbar
+            </option>
+
+            <option value="Enfermedad cardiovascular">
+                Enfermedad cardiovascular
+            </option>
+
+            <option value="Enfermedad respiratoria">
+                Enfermedad respiratoria
+            </option>
+
+            <option value="Enfermedad renal">
+                Enfermedad renal
+            </option>
+
+            <option value="Enfermedad tiroidea">
+                Enfermedad tiroidea
+            </option>
+
+            <option value="Fibromialgia">
+                Fibromialgia
+            </option>
+
+            <option value="Síndrome metabólico">
+                Síndrome metabólico
+            </option>
+
+            <option value="Otra">
+                Otra
+            </option>
+
+        </select>
+
+
+        <label>
+            Estado <span class="obligatorio">*</span>
+        </label>
+
+        <select id="estado">
+
+            <option value="">
+                Seleccionar estado
+            </option>
+
+            <option value="Controlada">
+                Controlada
+            </option>
+
+            <option value="En tratamiento">
+                En tratamiento
+            </option>
+
+            <option value="Activa">
+                Activa
+            </option>
+
+            <option value="Sin información">
+                Sin información
+            </option>
+
+        </select>
+
+
+        <label>Fecha de diagnóstico</label>
+
+        <input
+            type="date"
+            id="fecha"
+        >
+
+
+        <label>Observaciones</label>
+
+        <textarea
+            id="observaciones"
+            placeholder="Información reportada por el usuario..."
+        ></textarea>
+
+
+        <button
+            class="boton"
+            onclick="guardarPatologia()">
+
+            + GUARDAR PATOLOGÍA
+
+        </button>
+
+
+        <div
+            id="mensaje"
+            class="mensaje">
+        </div>
+
+    </div>
+
+
+    <!-- HISTORIAL -->
+
+    <div class="tarjeta">
+
+        <h2>📋 Historial de patologías</h2>
+
+        <div id="listaPatologias"></div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    let patologias = JSON.parse(
+        localStorage.getItem("patologiasDexoneFit")
+    ) || [];
+
+
+    let usuarios = JSON.parse(
+        localStorage.getItem("usuariosDexoneFit")
+    ) || [];
+
+
+    // CARGAR USUARIOS
+
+    function cargarUsuarios() {
+
+        const select =
+            document.getElementById("usuario");
+
+
+        select.innerHTML = `
+            <option value="">
+                Seleccionar usuario
+            </option>
+        `;
+
+
+        usuarios.forEach(function(usuario) {
+
+            const opcion =
+                document.createElement("option");
+
+
+            opcion.value =
+                usuario.nombre;
+
+
+            opcion.textContent =
+                usuario.nombre;
+
+
+            select.appendChild(opcion);
+
+        });
+
+    }
+
+
+    // GUARDAR
+
+    function guardarPatologia() {
+
+        const usuario =
+            document.getElementById("usuario").value;
+
+
+        const patologia =
+            document.getElementById("patologia").value;
+
+
+        const estado =
+            document.getElementById("estado").value;
+
+
+        const fecha =
+            document.getElementById("fecha").value;
+
+
+        const observaciones =
+            document.getElementById("observaciones").value.trim();
+
+
+        if (
+            !usuario ||
+            !patologia ||
+            !estado
+        ) {
+
+            document.getElementById("mensaje").textContent =
+                "⚠️ Completa los campos obligatorios.";
+
+            return;
+
+        }
+
+
+        const nuevaPatologia = {
+
+            id: Date.now(),
+
+            usuario: usuario,
+
+            patologia: patologia,
+
+            estado: estado,
+
+            fecha: fecha,
+
+            observaciones: observaciones
+
+        };
+
+
+        patologias.push(nuevaPatologia);
+
+
+        localStorage.setItem(
+            "patologiasDexoneFit",
+            JSON.stringify(patologias)
+        );
+
+
+        limpiarFormulario();
+
+
+        document.getElementById("mensaje").textContent =
+            "✅ Patología registrada correctamente.";
+
+
+        mostrarPatologias();
+
+    }
+
+
+    // LIMPIAR FORMULARIO
+
+    function limpiarFormulario() {
+
+        document.getElementById("usuario").value = "";
+
+        document.getElementById("patologia").value = "";
+
+        document.getElementById("estado").value = "";
+
+        document.getElementById("fecha").value = "";
+
+        document.getElementById("observaciones").value = "";
+
+    }
+
+
+    // MOSTRAR
+
+    function mostrarPatologias() {
+
+        const lista =
+            document.getElementById("listaPatologias");
+
+
+        lista.innerHTML = "";
+
+
+        if (patologias.length === 0) {
+
+            lista.innerHTML =
+                "<p>No hay patologías registradas.</p>";
+
+            return;
+
+        }
+
+
+        patologias.forEach(function(patologia, indice) {
+
+            const tarjeta =
+                document.createElement("div");
+
+
+            tarjeta.className =
+                "patologia";
+
+
+            tarjeta.innerHTML = `
+
+                <h3>
+                    🩺 ${patologia.usuario}
+                </h3>
+
+                <p>
+                    <strong>Patología:</strong>
+                    ${patologia.patologia}
+                </p>
+
+                <p>
+                    <strong>Estado:</strong>
+                    ${patologia.estado}
+                </p>
+
+                <p>
+                    <strong>Fecha de diagnóstico:</strong>
+                    ${patologia.fecha || "No registrada"}
+                </p>
+
+                <p>
+                    <strong>Observaciones:</strong>
+                    ${patologia.observaciones || "Sin observaciones"}
+                </p>
+
+                <button
+                    class="eliminar"
+                    onclick="eliminarPatologia(${indice})">
+
+                    Eliminar
+
+                </button>
+
+            `;
+
+
+            lista.appendChild(tarjeta);
+
+        });
+
+    }
+
+
+    // ELIMINAR
+
+    function eliminarPatologia(indice) {
+
+        const confirmar =
+            confirm(
+                "¿Deseas eliminar esta patología?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        patologias.splice(indice, 1);
+
+
+        localStorage.setItem(
+            "patologiasDexoneFit",
+            JSON.stringify(patologias)
+        );
+
+
+        mostrarPatologias();
+
+    }
+
+
+    cargarUsuarios();
+
+    mostrarPatologias();
+
+
+</script>
+
+
+</body>
+
+</html>

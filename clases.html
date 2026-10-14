@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clases - DexoneFit</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        header button:hover {
+            background: #e65100;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .reserva {
+            border-left: 5px solid #ff6d00;
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .reserva h3 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>DEXONE FIT</h1>
+
+        <p>Clases y reservas</p>
+
+        <button onclick="window.location.href='menu.html'">
+            ← VOLVER AL MENÚ
+        </button>
+
+    </header>
+
+
+    <div class="contenedor">
+
+        <!-- FORMULARIO -->
+
+        <div class="tarjeta">
+
+            <h2>Reservar una clase</h2>
+
+            <label>Usuario</label>
+
+            <select id="usuario">
+
+                <option value="">
+                    Seleccionar usuario
+                </option>
+
+            </select>
+
+
+            <label>Clase</label>
+
+            <select id="clase">
+
+                <option value="">
+                    Seleccionar clase
+                </option>
+
+                <option value="CrossFit">
+                    CrossFit
+                </option>
+
+                <option value="Pilates">
+                    Pilates
+                </option>
+
+                <option value="TRX">
+                    TRX
+                </option>
+
+                <option value="Entrenamiento funcional">
+                    Entrenamiento funcional
+                </option>
+
+            </select>
+
+
+            <label>Fecha</label>
+
+            <input type="date" id="fecha">
+
+
+            <label>Horario</label>
+
+            <select id="horario">
+
+                <option value="">
+                    Seleccionar horario
+                </option>
+
+                <option value="6:00 a.m.">
+                    6:00 a.m.
+                </option>
+
+                <option value="8:00 a.m.">
+                    8:00 a.m.
+                </option>
+
+                <option value="10:00 a.m.">
+                    10:00 a.m.
+                </option>
+
+                <option value="5:00 p.m.">
+                    5:00 p.m.
+                </option>
+
+                <option value="7:00 p.m.">
+                    7:00 p.m.
+                </option>
+
+            </select>
+
+
+            <button class="boton" onclick="guardarReserva()">
+                + RESERVAR CLASE
+            </button>
+
+
+            <div id="mensaje" class="mensaje"></div>
+
+        </div>
+
+
+        <!-- RESERVAS -->
+
+        <div class="tarjeta">
+
+            <h2>Reservas registradas</h2>
+
+            <div id="listaReservas"></div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let reservas = JSON.parse(
+            localStorage.getItem("reservasDexoneFit")
+        ) || [];
+
+
+        let usuarios = JSON.parse(
+            localStorage.getItem("usuariosDexoneFit")
+        ) || [];
+
+
+        // Cargar usuarios
+        function cargarUsuarios() {
+
+            const select =
+                document.getElementById("usuario");
+
+            usuarios.forEach(function(usuario) {
+
+                const opcion =
+                    document.createElement("option");
+
+                opcion.value = usuario.nombre;
+
+                opcion.textContent = usuario.nombre;
+
+                select.appendChild(opcion);
+
+            });
+
+        }
+
+
+        // Guardar reserva
+        function guardarReserva() {
+
+            const usuario =
+                document.getElementById("usuario").value;
+
+            const clase =
+                document.getElementById("clase").value;
+
+            const fecha =
+                document.getElementById("fecha").value;
+
+            const horario =
+                document.getElementById("horario").value;
+
+
+            if (!usuario || !clase || !fecha || !horario) {
+
+                document.getElementById("mensaje").textContent =
+                    "⚠️ Completa todos los campos.";
+
+                return;
+
+            }
+
+
+            const nuevaReserva = {
+
+                usuario: usuario,
+
+                clase: clase,
+
+                fecha: fecha,
+
+                horario: horario
+
+            };
+
+
+            reservas.push(nuevaReserva);
+
+
+            localStorage.setItem(
+                "reservasDexoneFit",
+                JSON.stringify(reservas)
+            );
+
+
+            document.getElementById("usuario").value = "";
+
+            document.getElementById("clase").value = "";
+
+            document.getElementById("fecha").value = "";
+
+            document.getElementById("horario").value = "";
+
+
+            document.getElementById("mensaje").textContent =
+                "✅ Reserva registrada correctamente.";
+
+
+            mostrarReservas();
+
+        }
+
+
+        // Mostrar reservas
+        function mostrarReservas() {
+
+            const lista =
+                document.getElementById("listaReservas");
+
+            lista.innerHTML = "";
+
+
+            if (reservas.length === 0) {
+
+                lista.innerHTML =
+                    "<p>No hay reservas registradas.</p>";
+
+                return;
+
+            }
+
+
+            reservas.forEach(function(reserva, indice) {
+
+                const tarjeta =
+                    document.createElement("div");
+
+                tarjeta.className = "reserva";
+
+
+                tarjeta.innerHTML = `
+
+                    <h3>📅 ${reserva.clase}</h3>
+
+                    <p>
+                        <strong>Usuario:</strong>
+                        ${reserva.usuario}
+                    </p>
+
+                    <p>
+                        <strong>Fecha:</strong>
+                        ${reserva.fecha}
+                    </p>
+
+                    <p>
+                        <strong>Horario:</strong>
+                        ${reserva.horario}
+                    </p>
+
+                    <button
+                        class="eliminar"
+                        onclick="eliminarReserva(${indice})">
+                        Eliminar reserva
+                    </button>
+
+                `;
+
+
+                lista.appendChild(tarjeta);
+
+            });
+
+        }
+
+
+        // Eliminar reserva
+        function eliminarReserva(indice) {
+
+            reservas.splice(indice, 1);
+
+
+            localStorage.setItem(
+                "reservasDexoneFit",
+                JSON.stringify(reservas)
+            );
+
+
+            mostrarReservas();
+
+        }
+
+
+        cargarUsuarios();
+
+        mostrarReservas();
+
+    </script>
+
+</body>
+
+</html>

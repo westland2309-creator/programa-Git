@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Satisfacción - DEXONEFIT</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            color: #333;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 6px 0 0;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .tarjeta h2 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        .campo label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .estrellas {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .estrella {
+            font-size: 35px;
+            color: #ccc;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .estrella:hover {
+            transform: scale(1.1);
+        }
+
+        .estrella.activa {
+            color: #ffb400;
+        }
+
+        .botones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        button {
+            border: none;
+            padding: 13px 18px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-guardar {
+            background: #00a86b;
+            color: white;
+        }
+
+        .btn-limpiar {
+            background: #ff6d00;
+            color: white;
+        }
+
+        .btn-historial {
+            background: #555;
+            color: white;
+        }
+
+        .btn-estadisticas {
+            background: #1976d2;
+            color: white;
+        }
+
+        .btn-inicio {
+            background: #777;
+            color: white;
+        }
+
+        .mensaje {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #e8f8f1;
+            color: #007a4d;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .estadistica {
+            background: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .estadistica h3 {
+            margin: 0;
+            color: #00a86b;
+            font-size: 28px;
+        }
+
+        .estadistica p {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 650px) {
+
+            .contenedor {
+                padding: 12px;
+            }
+
+            .tarjeta {
+                padding: 18px;
+            }
+
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+
+            button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>Encuesta de satisfacción</p>
+
+</header>
+
+
+<div class="contenedor">
+
+
+    <div class="tarjeta">
+
+        <h2>Evaluación del servicio</h2>
+
+        <p>
+            Ayúdanos a conocer tu experiencia
+            en DEXONEFIT.
+        </p>
+
+
+        <div class="campo">
+
+            <label for="usuario">
+                Usuario
+            </label>
+
+            <input
+                type="text"
+                id="usuario"
+                placeholder="Nombre del usuario">
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                ¿Qué tan satisfecho estás
+                con DEXONEFIT?
+            </label>
+
+            <div class="estrellas">
+
+                <span class="estrella" data-valor="1">★</span>
+                <span class="estrella" data-valor="2">★</span>
+                <span class="estrella" data-valor="3">★</span>
+                <span class="estrella" data-valor="4">★</span>
+                <span class="estrella" data-valor="5">★</span>
+
+            </div>
+
+            <input
+                type="hidden"
+                id="calificacion"
+                value="0">
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="entrenador">
+                Satisfacción con el entrenador
+            </label>
+
+            <select id="entrenador">
+
+                <option value="">
+                    Seleccione una opción
+                </option>
+
+                <option>Excelente</option>
+                <option>Muy bueno</option>
+                <option>Bueno</option>
+                <option>Regular</option>
+                <option>Malo</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="entrenamiento">
+                Satisfacción con los entrenamientos
+            </label>
+
+            <select id="entrenamiento">
+
+                <option value="">
+                    Seleccione una opción
+                </option>
+
+                <option>Excelente</option>
+                <option>Muy bueno</option>
+                <option>Bueno</option>
+                <option>Regular</option>
+                <option>Malo</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="instalaciones">
+                Satisfacción con las instalaciones
+            </label>
+
+            <select id="instalaciones">
+
+                <option value="">
+                    Seleccione una opción
+                </option>
+
+                <option>Excelente</option>
+                <option>Muy bueno</option>
+                <option>Bueno</option>
+                <option>Regular</option>
+                <option>Malo</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="clases">
+                Satisfacción con las clases
+            </label>
+
+            <select id="clases">
+
+                <option value="">
+                    Seleccione una opción
+                </option>
+
+                <option>Excelente</option>
+                <option>Muy bueno</option>
+                <option>Bueno</option>
+                <option>Regular</option>
+                <option>Malo</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="comentario">
+                Comentarios o sugerencias
+            </label>
+
+            <textarea
+                id="comentario"
+                placeholder="Escribe aquí tus comentarios..."></textarea>
+
+        </div>
+
+
+        <div class="botones">
+
+
+            <button
+                type="button"
+                class="btn-guardar"
+                onclick="guardarSatisfaccion()">
+
+                💾 Guardar satisfacción
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn-limpiar"
+                onclick="limpiarFormulario()">
+
+                🧹 Limpiar
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn-historial"
+                onclick="abrirHistorial()">
+
+                📋 Ver historial
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn-estadisticas"
+                onclick="abrirEstadisticas()">
+
+                📊 Ver estadísticas
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn-inicio"
+                onclick="volverInicio()">
+
+                🏠 Volver al inicio
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="mensaje"
+            class="mensaje">
+
+            ¡Satisfacción registrada correctamente!
+
+        </div>
+
+    </div>
+
+
+    <div class="tarjeta">
+
+        <h2>
+            Resumen de satisfacción
+        </h2>
+
+
+        <div class="resumen">
+
+
+            <div class="estadistica">
+
+                <h3 id="totalEncuestas">
+                    0
+                </h3>
+
+                <p>
+                    Encuestas registradas
+                </p>
+
+            </div>
+
+
+            <div class="estadistica">
+
+                <h3 id="promedio">
+                    0
+                </h3>
+
+                <p>
+                    Promedio general
+                </p>
+
+            </div>
+
+
+            <div class="estadistica">
+
+                <h3 id="ultimaCalificacion">
+                    0
+                </h3>
+
+                <p>
+                    Última calificación
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+let calificacionSeleccionada = 0;
+
+
+const estrellas =
+    document.querySelectorAll(".estrella");
+
+
+estrellas.forEach(function(estrella) {
+
+    estrella.addEventListener("click", function() {
+
+        calificacionSeleccionada =
+            Number(this.dataset.valor);
+
+
+        document.getElementById("calificacion")
+            .value = calificacionSeleccionada;
+
+
+        estrellas.forEach(function(e) {
+
+            e.classList.remove("activa");
+
+        });
+
+
+        estrellas.forEach(function(e) {
+
+            if (
+                Number(e.dataset.valor)
+                <= calificacionSeleccionada
+            ) {
+
+                e.classList.add("activa");
+
+            }
+
+        });
+
+    });
+
+});
+
+
+function guardarSatisfaccion() {
+
+
+    const usuario =
+        document.getElementById("usuario")
+        .value.trim();
+
+
+    const entrenador =
+        document.getElementById("entrenador")
+        .value;
+
+
+    const entrenamiento =
+        document.getElementById("entrenamiento")
+        .value;
+
+
+    const instalaciones =
+        document.getElementById("instalaciones")
+        .value;
+
+
+    const clases =
+        document.getElementById("clases")
+        .value;
+
+
+    const comentario =
+        document.getElementById("comentario")
+        .value.trim();
+
+
+    if (usuario === "") {
+
+        alert(
+            "Por favor ingresa el nombre del usuario."
+        );
+
+        return;
+
+    }
+
+
+    if (calificacionSeleccionada === 0) {
+
+        alert(
+            "Por favor selecciona una calificación."
+        );
+
+        return;
+
+    }
+
+
+    const encuesta = {
+
+        id: Date.now(),
+
+        usuario: usuario,
+
+        calificacion:
+            calificacionSeleccionada,
+
+        entrenador:
+            entrenador,
+
+        entrenamiento:
+            entrenamiento,
+
+        instalaciones:
+            instalaciones,
+
+        clases:
+            clases,
+
+        comentario:
+            comentario,
+
+        fecha:
+            new Date().toLocaleString()
+
+    };
+
+
+    let encuestas =
+        JSON.parse(
+            localStorage.getItem(
+                "satisfaccionesDexoneFit"
+            )
+        ) || [];
+
+
+    encuestas.push(encuesta);
+
+
+    localStorage.setItem(
+        "satisfaccionesDexoneFit",
+        JSON.stringify(encuestas)
+    );
+
+
+    document.getElementById("mensaje")
+        .style.display = "block";
+
+
+    actualizarResumen();
+
+
+    limpiarFormulario();
+
+
+    setTimeout(function() {
+
+        document.getElementById("mensaje")
+            .style.display = "none";
+
+    }, 3000);
+
+}
+
+
+function limpiarFormulario() {
+
+
+    document.getElementById("usuario").value = "";
+
+    document.getElementById("entrenador").value = "";
+
+    document.getElementById("entrenamiento").value = "";
+
+    document.getElementById("instalaciones").value = "";
+
+    document.getElementById("clases").value = "";
+
+    document.getElementById("comentario").value = "";
+
+
+    calificacionSeleccionada = 0;
+
+
+    document.getElementById("calificacion")
+        .value = 0;
+
+
+    estrellas.forEach(function(e) {
+
+        e.classList.remove("activa");
+
+    });
+
+}
+
+
+function actualizarResumen() {
+
+
+    const encuestas =
+        JSON.parse(
+            localStorage.getItem(
+                "satisfaccionesDexoneFit"
+            )
+        ) || [];
+
+
+    document.getElementById("totalEncuestas")
+        .textContent = encuestas.length;
+
+
+    if (encuestas.length === 0) {
+
+        document.getElementById("promedio")
+            .textContent = "0";
+
+        document.getElementById("ultimaCalificacion")
+            .textContent = "0";
+
+        return;
+
+    }
+
+
+    let suma = 0;
+
+
+    encuestas.forEach(function(encuesta) {
+
+        suma += Number(encuesta.calificacion);
+
+    });
+
+
+    const promedio =
+        suma / encuestas.length;
+
+
+    document.getElementById("promedio")
+        .textContent =
+        promedio.toFixed(1) + " ★";
+
+
+    const ultima =
+        encuestas[encuestas.length - 1];
+
+
+    document.getElementById("ultimaCalificacion")
+        .textContent =
+        ultima.calificacion + " ★";
+
+}
+
+
+/* =========================
+   NAVEGACIÓN
+========================= */
+
+
+function abrirHistorial() {
+
+    window.location.href =
+        "./historial/historial.html";
+
+}
+
+
+function abrirEstadisticas() {
+
+    window.location.href =
+        "./estadisticas/estadisticas.html";
+
+}
+
+
+function volverInicio() {
+
+    window.location.href =
+        "../menu/menu.html";
+
+}
+
+
+actualizarResumen();
+
+</script>
+
+
+</body>
+
+</html>

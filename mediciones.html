@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mediciones - DEXONEFIT</title>
+
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+        }
+
+        header {
+            background: #00a86b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+        }
+
+        .boton {
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #ff6d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #e65100;
+        }
+
+        .medicion {
+            border-left: 5px solid #ff6d00;
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .medicion h3 {
+            color: #00a86b;
+            margin-top: 0;
+        }
+
+        .eliminar {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            padding: 18px;
+            background: #eef8f3;
+            border-radius: 10px;
+        }
+
+        .resultado strong {
+            color: #00a86b;
+            font-size: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>DEXONEFIT</h1>
+
+    <p>Mediciones y seguimiento corporal</p>
+
+    <button onclick="window.location.href='menu.html'">
+
+        ← VOLVER AL MENÚ
+
+    </button>
+
+</header>
+
+
+<div class="contenedor">
+
+
+    <!-- REGISTRAR MEDICIÓN -->
+
+    <div class="tarjeta">
+
+        <h2>📏 Registrar medición</h2>
+
+
+        <label>
+            Usuario
+        </label>
+
+        <select id="usuario">
+
+            <option value="">
+                Seleccionar usuario
+            </option>
+
+        </select>
+
+
+        <label>
+            Fecha de medición
+        </label>
+
+        <input
+            type="date"
+            id="fecha"
+        >
+
+
+        <div class="grid">
+
+
+            <div>
+
+                <label>
+                    Peso (kg)
+                </label>
+
+                <input
+                    type="number"
+                    id="peso"
+                    min="0"
+                    step="0.1"
+                    placeholder="Ej: 78"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Estatura (cm)
+                </label>
+
+                <input
+                    type="number"
+                    id="estatura"
+                    min="0"
+                    step="0.1"
+                    placeholder="Ej: 175"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Grasa corporal (%)
+                </label>
+
+                <input
+                    type="number"
+                    id="grasa"
+                    min="0"
+                    step="0.1"
+                    placeholder="Ej: 18.5"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Masa muscular (kg)
+                </label>
+
+                <input
+                    type="number"
+                    id="musculo"
+                    min="0"
+                    step="0.1"
+                    placeholder="Ej: 35"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Cintura (cm)
+                </label>
+
+                <input
+                    type="number"
+                    id="cintura"
+                    min="0"
+                    step="0.1"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Cadera (cm)
+                </label>
+
+                <input
+                    type="number"
+                    id="cadera"
+                    min="0"
+                    step="0.1"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Brazo (cm)
+                </label>
+
+                <input
+                    type="number"
+                    id="brazo"
+                    min="0"
+                    step="0.1"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Muslo (cm)
+                </label>
+
+                <input
+                    type="number"
+                    id="muslo"
+                    min="0"
+                    step="0.1"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Edad metabólica
+                </label>
+
+                <input
+                    type="number"
+                    id="edadMetabolica"
+                    min="0"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Grasa visceral
+                </label>
+
+                <input
+                    type="number"
+                    id="grasaVisceral"
+                    min="0"
+                    step="0.1"
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <!-- IMC -->
+
+        <div class="resultado">
+
+            <p>
+                <strong>IMC calculado:</strong>
+                <span id="imc">
+                    0
+                </span>
+            </p>
+
+            <p>
+                <strong>Clasificación:</strong>
+                <span id="clasificacion">
+                    Sin calcular
+                </span>
+            </p>
+
+        </div>
+
+
+        <button
+            class="boton"
+            onclick="guardarMedicion()">
+
+            + GUARDAR MEDICIÓN
+
+        </button>
+
+
+        <div
+            id="mensaje"
+            class="mensaje">
+        </div>
+
+    </div>
+
+
+    <!-- HISTORIAL -->
+
+    <div class="tarjeta">
+
+        <h2>📋 Historial de mediciones</h2>
+
+        <div id="listaMediciones"></div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    let mediciones = JSON.parse(
+        localStorage.getItem("medicionesDexoneFit")
+    ) || [];
+
+
+    let usuarios = JSON.parse(
+        localStorage.getItem("usuariosDexoneFit")
+    ) || [];
+
+
+    // CARGAR USUARIOS
+
+    function cargarUsuarios() {
+
+        const select =
+            document.getElementById("usuario");
+
+
+        select.innerHTML = `
+            <option value="">
+                Seleccionar usuario
+            </option>
+        `;
+
+
+        usuarios.forEach(function(usuario) {
+
+            const opcion =
+                document.createElement("option");
+
+
+            opcion.value =
+                usuario.nombre;
+
+
+            opcion.textContent =
+                usuario.nombre;
+
+
+            select.appendChild(opcion);
+
+        });
+
+    }
+
+
+    // CALCULAR IMC
+
+    function calcularIMC() {
+
+        const peso =
+            Number(
+                document.getElementById("peso").value
+            ) || 0;
+
+
+        const estatura =
+            Number(
+                document.getElementById("estatura").value
+            ) || 0;
+
+
+        if (peso <= 0 || estatura <= 0) {
+
+            document.getElementById("imc")
+                .textContent = "0";
+
+            document.getElementById("clasificacion")
+                .textContent = "Sin calcular";
+
+            return;
+
+        }
+
+
+        const estaturaMetros =
+            estatura / 100;
+
+
+        const resultado =
+            peso /
+            (estaturaMetros * estaturaMetros);
+
+
+        document.getElementById("imc")
+            .textContent =
+            resultado.toFixed(2);
+
+
+        let clasificacion = "";
+
+
+        if (resultado < 18.5) {
+
+            clasificacion = "Bajo peso";
+
+        }
+        else if (resultado < 25) {
+
+            clasificacion = "Peso normal";
+
+        }
+        else if (resultado < 30) {
+
+            clasificacion = "Sobrepeso";
+
+        }
+        else {
+
+            clasificacion = "Obesidad";
+
+        }
+
+
+        document.getElementById("clasificacion")
+            .textContent =
+            clasificacion;
+
+    }
+
+
+    document.getElementById("peso")
+        .addEventListener("input", calcularIMC);
+
+
+    document.getElementById("estatura")
+        .addEventListener("input", calcularIMC);
+
+
+    // GUARDAR MEDICIÓN
+
+    function guardarMedicion() {
+
+        const usuario =
+            document.getElementById("usuario").value;
+
+
+        const fecha =
+            document.getElementById("fecha").value;
+
+
+        const peso =
+            Number(
+                document.getElementById("peso").value
+            ) || 0;
+
+
+        const estatura =
+            Number(
+                document.getElementById("estatura").value
+            ) || 0;
+
+
+        const grasa =
+            Number(
+                document.getElementById("grasa").value
+            ) || 0;
+
+
+        const musculo =
+            Number(
+                document.getElementById("musculo").value
+            ) || 0;
+
+
+        const cintura =
+            Number(
+                document.getElementById("cintura").value
+            ) || 0;
+
+
+        const cadera =
+            Number(
+                document.getElementById("cadera").value
+            ) || 0;
+
+
+        const brazo =
+            Number(
+                document.getElementById("brazo").value
+            ) || 0;
+
+
+        const muslo =
+            Number(
+                document.getElementById("muslo").value
+            ) || 0;
+
+
+        const edadMetabolica =
+            Number(
+                document.getElementById("edadMetabolica").value
+            ) || 0;
+
+
+        const grasaVisceral =
+            Number(
+                document.getElementById("grasaVisceral").value
+            ) || 0;
+
+
+        if (!usuario || !fecha) {
+
+            document.getElementById("mensaje").textContent =
+                "⚠️ Selecciona un usuario y una fecha.";
+
+            return;
+
+        }
+
+
+        let imc = 0;
+
+
+        if (peso > 0 && estatura > 0) {
+
+            const altura =
+                estatura / 100;
+
+            imc =
+                peso / (altura * altura);
+
+        }
+
+
+        const nuevaMedicion = {
+
+            id: Date.now(),
+
+            usuario: usuario,
+
+            fecha: fecha,
+
+            peso: peso,
+
+            estatura: estatura,
+
+            grasa: grasa,
+
+            musculo: musculo,
+
+            cintura: cintura,
+
+            cadera: cadera,
+
+            brazo: brazo,
+
+            muslo: muslo,
+
+            edadMetabolica: edadMetabolica,
+
+            grasaVisceral: grasaVisceral,
+
+            imc: imc
+
+        };
+
+
+        mediciones.push(nuevaMedicion);
+
+
+        localStorage.setItem(
+            "medicionesDexoneFit",
+            JSON.stringify(mediciones)
+        );
+
+
+        limpiarFormulario();
+
+
+        document.getElementById("mensaje").textContent =
+            "✅ Medición registrada correctamente.";
+
+
+        mostrarMediciones();
+
+    }
+
+
+    // LIMPIAR
+
+    function limpiarFormulario() {
+
+        document.getElementById("usuario").value = "";
+
+        document.getElementById("fecha").value = "";
+
+        document.getElementById("peso").value = "";
+
+        document.getElementById("estatura").value = "";
+
+        document.getElementById("grasa").value = "";
+
+        document.getElementById("musculo").value = "";
+
+        document.getElementById("cintura").value = "";
+
+        document.getElementById("cadera").value = "";
+
+        document.getElementById("brazo").value = "";
+
+        document.getElementById("muslo").value = "";
+
+        document.getElementById("edadMetabolica").value = "";
+
+        document.getElementById("grasaVisceral").value = "";
+
+        document.getElementById("imc").textContent = "0";
+
+        document.getElementById("clasificacion")
+            .textContent = "Sin calcular";
+
+    }
+
+
+    // MOSTRAR HISTORIAL
+
+    function mostrarMediciones() {
+
+        const lista =
+            document.getElementById("listaMediciones");
+
+
+        lista.innerHTML = "";
+
+
+        if (mediciones.length === 0) {
+
+            lista.innerHTML =
+                "<p>No hay mediciones registradas.</p>";
+
+            return;
+
+        }
+
+
+        mediciones.forEach(function(medicion, indice) {
+
+            const tarjeta =
+                document.createElement("div");
+
+
+            tarjeta.className =
+                "medicion";
+
+
+            tarjeta.innerHTML = `
+
+                <h3>
+                    📏 ${medicion.usuario}
+                </h3>
+
+                <p>
+                    <strong>Fecha:</strong>
+                    ${medicion.fecha}
+                </p>
+
+                <p>
+                    <strong>Peso:</strong>
+                    ${medicion.peso || "No registrado"} kg
+                </p>
+
+                <p>
+                    <strong>Estatura:</strong>
+                    ${medicion.estatura || "No registrada"} cm
+                </p>
+
+                <p>
+                    <strong>Grasa corporal:</strong>
+                    ${medicion.grasa || "No registrada"} %
+                </p>
+
+                <p>
+                    <strong>Masa muscular:</strong>
+                    ${medicion.musculo || "No registrada"} kg
+                </p>
+
+                <p>
+                    <strong>IMC:</strong>
+                    ${medicion.imc
+                        ? medicion.imc.toFixed(2)
+                        : "No calculado"}
+                </p>
+
+                <p>
+                    <strong>Cintura:</strong>
+                    ${medicion.cintura || "No registrada"} cm
+                </p>
+
+                <p>
+                    <strong>Cadera:</strong>
+                    ${medicion.cadera || "No registrada"} cm
+                </p>
+
+                <p>
+                    <strong>Brazo:</strong>
+                    ${medicion.brazo || "No registrado"} cm
+                </p>
+
+                <p>
+                    <strong>Muslo:</strong>
+                    ${medicion.muslo || "No registrado"} cm
+                </p>
+
+                <p>
+                    <strong>Edad metabólica:</strong>
+                    ${medicion.edadMetabolica || "No registrada"}
+                </p>
+
+                <p>
+                    <strong>Grasa visceral:</strong>
+                    ${medicion.grasaVisceral || "No registrada"}
+                </p>
+
+                <button
+                    class="eliminar"
+                    onclick="eliminarMedicion(${indice})">
+
+                    Eliminar
+
+                </button>
+
+            `;
+
+
+            lista.appendChild(tarjeta);
+
+        });
+
+    }
+
+
+    // ELIMINAR
+
+    function eliminarMedicion(indice) {
+
+        const confirmar =
+            confirm(
+                "¿Deseas eliminar esta medición?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        mediciones.splice(indice, 1);
+
+
+        localStorage.setItem(
+            "medicionesDexoneFit",
+            JSON.stringify(mediciones)
+        );
+
+
+        mostrarMediciones();
+
+    }
+
+
+    cargarUsuarios();
+
+    mostrarMediciones();
+
+
+</script>
+
+
+</body>
+
+</html>
